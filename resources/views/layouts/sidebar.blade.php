@@ -15,6 +15,31 @@
                 <span>Beranda</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <i class="fas fa-th-large"></i>
+                <span>Kreteria</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="false" aria-controls="collapseTable">
+            <i class="fas fa-rocket"></i>
+            <span>Alternatif</span>
+            </a>
+            <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Tambah Data</h6>
+                <a class="collapse-item" href="simple-tables.html">Alternatif</a>
+                <a class="collapse-item" href="datatables.html">Nilai Alternatif</a>
+            </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Perhitungan</span>
+            </a>
+        </li>
     <li class="nav-item">
             <a class="nav-link" href="#">
                 <i class="fas fa-sign-out-alt"></i>
