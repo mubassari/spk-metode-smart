@@ -14,7 +14,7 @@ class KreteriaController extends Controller
      */
     public function index()
     {
-        //
+        return view('kreteria.index', ['kreteria_' => Kreteria::OrderBy('kode', 'ASC')->get()]);
     }
 
     /**

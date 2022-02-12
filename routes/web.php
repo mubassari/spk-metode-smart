@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KreteriaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('blank-page');
 });
+Route::resource('kreteria', KreteriaController::class)->except(['show']);
