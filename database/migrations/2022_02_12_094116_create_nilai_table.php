@@ -15,11 +15,14 @@ class CreateNilaiTable extends Migration
     {
         Schema::create('nilai', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('alternatif_id');
-            $table->foreign('alternatif_id')->references('id')->on('alternatif')->onDelete('cascade');
-            $table->unsignedBigInteger('parameter_id');
-            $table->foreign('parameter_id')->references('id')->on('parameter')->onDelete('cascade');
+            $table->unsignedBigInteger('id_alternatif');
+            $table->unsignedBigInteger('id_kriteria');
+            $table->unsignedBigInteger('id_parameter');
             $table->timestamps();
+
+            $table->foreign('id_alternatif')->references('id')->on('alternatif')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('id_kriteria')->references('id')->on('kriteria')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('id_parameter')->references('id')->on('parameter')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

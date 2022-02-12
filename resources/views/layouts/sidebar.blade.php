@@ -18,13 +18,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable1" aria-expanded="false" aria-controls="collapseTable1">
             <i class="fas fa-th-large"></i>
-            <span>Kreteria</span>
+            <span>Kriteria</span>
             </a>
             <div id="collapseTable1" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tambah Data</h6>
-                <a class="collapse-item" href="{{ route('kreteria.index') }}">Kreteria</a>
-                <a class="collapse-item" href="datatables.html">Parameter Kreteria</a>
+                <a class="collapse-item" href="{{ route('kriteria.index') }}">Kriteria</a>
+                <a class="collapse-item" href="datatables.html">Parameter Kriteria</a>
             </div>
             </div>
         </li>

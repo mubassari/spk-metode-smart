@@ -15,10 +15,9 @@ class CreateParameterTable extends Migration
     {
         Schema::create('parameter', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_subkreteria');
-            $table->integer('bobot');
-            $table->unsignedBigInteger('kreteria_id');
-            $table->foreign('kreteria_id')->references('id')->on('kreteria')->onDelete('cascade');
+            $table->foreignId("id_kriteria")->references("id")->on("kriteria")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('nama');
+            $table->unsignedInteger('bobot');
             $table->timestamps();
         });
     }

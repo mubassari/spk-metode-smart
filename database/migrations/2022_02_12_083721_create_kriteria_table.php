@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubKriteriaTable extends Migration
+class CreateKriteriaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSubKriteriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_kriteria', function (Blueprint $table) {
+        Schema::create('kriteria', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("id_kriteria")->references("id")->on("kriteria")->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string("nama");
-            $table->unsignedInteger("nilai_bobot");
-
+            $table->string('nama');
+            $table->unsignedInteger('bobot');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ class CreateSubKriteriaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_kriteria');
+        Schema::dropIfExists('kriteria');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kreteria;
+use App\Models\Kriteria;
 use Illuminate\Http\Request;
 
-class KreteriaController extends Controller
+class KriteriaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class KreteriaController extends Controller
      */
     public function index()
     {
-        return view('kreteria.index', ['kreteria_' => Kreteria::OrderBy('kode', 'ASC')->get()]);
+        $kriteria =  Kriteria::all();
+        return view('kriteria.index', ['kriteria_' => $kriteria]);
     }
 
     /**
@@ -41,10 +42,10 @@ class KreteriaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kreteria  $kreteria
+     * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function show(Kreteria $kreteria)
+    public function show(Kriteria $kriteria)
     {
         //
     }
@@ -52,10 +53,10 @@ class KreteriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kreteria  $kreteria
+     * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kreteria $kreteria)
+    public function edit(Kriteria $kriteria)
     {
         //
     }
@@ -64,10 +65,10 @@ class KreteriaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kreteria  $kreteria
+     * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kreteria $kreteria)
+    public function update(Request $request, Kriteria $kriteria)
     {
         //
     }
@@ -75,10 +76,10 @@ class KreteriaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kreteria  $kreteria
+     * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kreteria $kreteria)
+    public function destroy(Kriteria $kriteria)
     {
         //
     }

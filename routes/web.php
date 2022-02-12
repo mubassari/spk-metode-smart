@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\KreteriaController;
+use App\Http\Controllers\KriteriaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('blank-page');
 });
-Route::resource('kreteria', KreteriaController::class)->except(['show']);
+Route::resource('kriteria', KriteriaController::class)->except(['show']);
