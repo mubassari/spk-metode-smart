@@ -15,10 +15,10 @@ class NilaiSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID');
         $alternatif_ = \App\Models\Alternatif::all();
+        $kriteria_ = \App\Models\Kriteria::all();
         foreach ($alternatif_ as $alternatif) {
-            for ($i = 1; $i <= 6; $i++) {
-                $parameter_ = \App\Models\Parameter::where('id_kriteria', $i)->get();
-                $parameter = $faker->randomElement($parameter_);
+            foreach ($kriteria_ as $kriteria) {
+                $parameter = \App\Models\Parameter::where('id_kriteria', $kriteria->id)->inRandomOrder()->first();
                 \App\Models\Nilai::create([
                     'id_alternatif' => $alternatif->id,
                     'id_kriteria' => $parameter->id_kriteria,
