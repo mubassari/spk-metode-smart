@@ -14,7 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('blank-page');
-});
+Route::get('/', function () { return view('blank-page'); });
 Route::resource('kriteria', KriteriaController::class)->except(['show']);

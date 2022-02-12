@@ -20,7 +20,7 @@ class NilaiSeeder extends Seeder
                 $parameter = \App\Models\Parameter::where('id_kriteria', $kriteria->id)->inRandomOrder()->first();
                 \App\Models\Nilai::create([
                     'id_alternatif' => $alternatif->id,
-                    'id_kriteria' => $parameter->id_kriteria,
+                    'id_kriteria' => $kriteria->id,
                     'id_parameter' => $parameter->id,
                 ]);
             }

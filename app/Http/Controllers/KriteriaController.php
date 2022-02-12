@@ -25,7 +25,7 @@ class KriteriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('kriteria.create');
     }
 
     /**
@@ -36,7 +36,17 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nama' => 'required',
+    		'bobot' => 'required|numeric'
+    	]);
+
+        $kriteria = new Kriteria;
+        $kriteria->nama = $request->nama;
+        $kriteria->bobot = $request->bobot;
+        $kriteria->save();
+
+        return redirect('/kriteria');
     }
 
     /**
@@ -56,9 +66,10 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kriteria $kriteria)
+    public function edit($id)
     {
-        //
+        $kriteria = Kriteria::find($id);
+        return view('kriteria.edit', ['kriteria' => $kriteria]);
     }
 
     /**
@@ -68,9 +79,20 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kriteria $kriteria)
+    public function update($id, Request $request)
     {
-        //
+        $this->validate($request, [
+            'nama' => 'required',
+    		'bobot' => 'required|numeric'
+    	]);
+
+        $kriteria = Kriteria::find($id);
+        $kriteria->nama = $request->nama;
+        $kriteria->bobot = $request->bobot;
+        $kriteria->save();
+
+        return redirect('/kriteria');
+
     }
 
     /**
@@ -79,8 +101,11 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kriteria $kriteria)
+    public function destroy($id)
     {
-        //
+        $kriteria = Kriteria::find($id);
+        $kriteria->delete();
+        
+        return redirect('/kriteria');
     }
 }

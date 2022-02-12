@@ -1,17 +1,16 @@
 @extends('layouts.main')
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Kriteria</h1>
+    <h1 class="h3 mb-0 text-gray-800">Tampil Data Kriteria</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Kriteria</a></li>
-        <li class="breadcrumb-item">Data Kriteria</li>
+        <li class="breadcrumb-item"><a href="/kriteria">Kriteria</a></li>
+        <li class="breadcrumb-item">Tampil Data</li>
     </ol>
 </div>
 <!-- Simple Tables -->
 <div class="card">
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Data Kriteria</h6>
-        <a href="#" class="btn btn-primary">Tambah Kriteria</a>
+    <div class="card-header py-3 d-flex flex-row align-items-end justify-content-end">
+        <a href="/kriteria/create" class="btn btn-primary">Tambah Kriteria</a>
     </div>
     <div class="table-responsive">
         <table class="table align-items-center table-flush">
@@ -20,6 +19,7 @@
                 <th>No</th>
                 <th>Kode</th>
                 <th>Nama Kriteria</th>
+                <th>Bobot Kriteria</th>
                 <th class="text-center">Opsi</th>
             </tr>
         </thead>
@@ -29,9 +29,14 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>C{{ str_pad($kriteria->id, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $kriteria->nama }}</td>
-                    <td class="text-center">
-                        <a href="#" class="btn btn-sm btn-info">Edit</a>
-                        <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                    <td>{{ $kriteria->bobot }}</td>
+                    <td class="text-center d-flex justify-content-around">
+                        <a href="/kriteria/{{ $kriteria->id }}/edit" class="btn btn-sm btn-info">Ubah</a>
+                        <form method="POST" action="/kriteria/{{ $kriteria->id }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <input type="submit" class="btn btn-sm btn-danger" value="Hapus">
+                        </form>
                     </td>
                 </tr>
             @endforeach
