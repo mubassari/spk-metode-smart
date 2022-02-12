@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
+use App\Http\Requests\FormKriteriaRequest;
 
 class KriteriaController extends Controller
 {
@@ -34,19 +35,13 @@ class KriteriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormKriteriaRequest $request)
     {
-        $this->validate($request, [
-            'nama' => 'required',
-    		'bobot' => 'required|numeric'
-    	]);
+        $request->validated();
+        $kriteria = $request->all();
+        Kriteria::create($kriteria);
 
-        $kriteria = new Kriteria;
-        $kriteria->nama = $request->nama;
-        $kriteria->bobot = $request->bobot;
-        $kriteria->save();
-
-        return redirect('/kriteria');
+        return redirect(route('kriteria.index'));
     }
 
     /**
@@ -79,20 +74,14 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, FormKriteriaRequest $request)
     {
-        $this->validate($request, [
-            'nama' => 'required',
-    		'bobot' => 'required|numeric'
-    	]);
-
+        $request->validated();
+        $input = $request->all();
         $kriteria = Kriteria::find($id);
-        $kriteria->nama = $request->nama;
-        $kriteria->bobot = $request->bobot;
-        $kriteria->save();
+        $kriteria->fill($input)->save();
 
-        return redirect('/kriteria');
-
+        return redirect(route('kriteria.index'));
     }
 
     /**
@@ -105,7 +94,7 @@ class KriteriaController extends Controller
     {
         $kriteria = Kriteria::find($id);
         $kriteria->delete();
-        
-        return redirect('/kriteria');
+
+        return redirect(route('kriteria.index'));
     }
 }
