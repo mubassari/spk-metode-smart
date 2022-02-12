@@ -14,5 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        \App\Models\Kreteria::factory(6)->create();
+        $this->call(ParameterSeeder::class);
+        \App\Models\Alternatif::factory(5)->create();
+        $this->call(NilaiSeeder::class);
     }
 }
