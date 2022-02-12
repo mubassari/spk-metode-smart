@@ -13,7 +13,6 @@ class NilaiSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create('id_ID');
         $alternatif_ = \App\Models\Alternatif::all();
         $kriteria_ = \App\Models\Kriteria::all();
         foreach ($alternatif_ as $alternatif) {
