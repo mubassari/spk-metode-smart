@@ -25,8 +25,11 @@
 </div>
 <button type="reset" class="btn btn-primary">Reset</button>
 <button type="submit" class="btn btn-primary">{{ $tombol }}</button>
+
+@push('script')
 <script>
     function checkNumber(value) {
         return /(^\d+$)/.test(value.key);
     }
 </script>
+@endpush
