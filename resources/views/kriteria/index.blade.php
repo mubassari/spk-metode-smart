@@ -7,12 +7,11 @@
         <li class="breadcrumb-item">Tampil Data</li>
     </ol>
 </div>
-<!-- Simple Tables -->
-<div class="card">
-    <div class="card-header py-3 d-flex flex-row align-items-end justify-content-end">
+<div class="card mb-3">
+    <div class="card-header d-flex flex-row align-items-end justify-content-end">
         <a href="{{ route('kriteria.create') }}" class="btn btn-primary">Tambah Kriteria</a>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive p-3">
         <table class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>

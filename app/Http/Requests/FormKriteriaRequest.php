@@ -28,18 +28,4 @@ class FormKriteriaRequest extends FormRequest
             'bobot' => 'required|numeric'
         ];
     }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'nama.required' => 'Inputan :attribute tidak boleh kosong',
-            'bobot.required' => 'Inputan :attribute tidak boleh kosong',
-            'bobot.numeric' => 'Inputan :attribute hanya dapat berupa angka',
-        ];
-    }
 }
