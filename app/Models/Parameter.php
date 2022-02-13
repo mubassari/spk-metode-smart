@@ -9,5 +9,9 @@ class Parameter extends Model
 {
     use HasFactory;
     protected $table = 'parameter';
-    protected $guarded = [];
+    protected $fillable = ['id_kriteria', 'nama', 'bobot'];
+    public function kriteria()
+    {
+        return $this->belongsTo(Kriteria::class);
+    }
 }

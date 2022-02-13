@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormParameterRequest;
+use App\Models\Kriteria;
 use App\Models\Parameter;
-use Illuminate\Http\Request;
 
 class ParameterController extends Controller
 {
@@ -14,7 +15,10 @@ class ParameterController extends Controller
      */
     public function index()
     {
-        //
+        $result = Parameter::select("parameter.*", "kriteria.nama as nama_kriteria")->join("kriteria", "kriteria.id", "=", "parameter.id_kriteria")->orderBy('id_kriteria')->orderBy('bobot')->get();
+        return view('parameter.index', [
+            'parameter_' => $result,
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class ParameterController extends Controller
      */
     public function create()
     {
-        //
+        return view('parameter.create', ['kriteria' => Kriteria::Select('id', 'nama')->get()]);
     }
 
     /**
@@ -33,9 +37,11 @@ class ParameterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormParameterRequest $request)
     {
-        //
+        $request->validated();
+        Parameter::create($request->only(['id_kriteria', 'nama', 'bobot']));
+        return redirect(route('parameter.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);
     }
 
     /**
@@ -57,7 +63,10 @@ class ParameterController extends Controller
      */
     public function edit(Parameter $parameter)
     {
-        //
+        return view('parameter.edit', [
+            'kriteria' => Kriteria::Select('id', 'nama')->get(),
+            'parameter' => $parameter,
+        ]);
     }
 
     /**
@@ -67,9 +76,11 @@ class ParameterController extends Controller
      * @param  \App\Models\Parameter  $parameter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parameter $parameter)
+    public function update(Parameter $parameter, FormParameterRequest $request)
     {
-        //
+        $request->validated();
+        $parameter->update($request->only(['id_kriteria', 'nama', 'bobot']));
+        return redirect(route('parameter.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }
 
     /**
@@ -80,6 +91,7 @@ class ParameterController extends Controller
      */
     public function destroy(Parameter $parameter)
     {
-        //
+        $parameter->delete();
+        return redirect(route('parameter.index'))->with(['pesan' => "Data $parameter->nama  berhasil dihapus."]);
     }
 }

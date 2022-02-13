@@ -24,7 +24,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tambah Data</h6>
                 <a class="collapse-item" href="{{ route('kriteria.index') }}">Kriteria</a>
-                <a class="collapse-item" href="datatables.html">Parameter Kriteria</a>
+                <a class="collapse-item" href="{{ route('parameter.index') }}">Parameter Kriteria</a>
             </div>
             </div>
         </li>
