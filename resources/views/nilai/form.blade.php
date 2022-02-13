@@ -4,7 +4,7 @@
     <label for="nilai[{{ $kriteria->id }}]">Pilih Nilai {{ $kriteria->nama }}</label>
     <select name="nilai[{{ $kriteria->id }}]" id="nilai[{{ $kriteria->id }}]"
         class="form-control @error('id_kriteria') is-invalid @enderror">
-        <option value="">Pilih</option>
+        <option value="" disabled>Pilih</option>
         @foreach ($parameter_[$key] as $parameter)
             <option value="{{ $parameter->id }}" {{old('nilai'.$kriteria->id, ($parameter->id ?? '')) == ($nilai[$key]->id_parameter ?? '') ? 'selected' : '' }}>{{ $parameter->id}} {{ $parameter->nama }}</option>
         @endforeach

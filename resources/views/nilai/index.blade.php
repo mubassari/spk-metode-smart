@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kreteria" subItem="Tampil Data" />
+<x-breadcrumb title="Tampil Data Nilai" link="{{ route('nilai.index') }}" item="Nilai" subItem="Tampil Data" />
 <x-alertmessage />
 <div class="card mb-3">
     {{-- <div class="card-header d-flex flex-row align-items-end justify-content-end">
@@ -23,11 +23,15 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $alternatif->nama }}</td>
-                    @foreach ($nilai_[$key] as $nilai)
-                        <td>
-                            {{ $nilai->nama }}
-                        </td>
-                    @endforeach
+                    @if (empty($nilai_[$key]))
+                        <td colspan="{{ count($kriteria_) }}"></td>
+                    @else
+                        @foreach ($nilai_[$key] as $nilai)
+                            <td>
+                                {{ $nilai->nama }}
+                            </td>
+                        @endforeach
+                    @endif
                     <td class="text-center">
                         <a href="{{ route('nilai.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
                     </td>
@@ -43,6 +47,7 @@
 <script>
     $(document).ready(function ()   {
         $('#nilai').DataTable({
+            info: false,
             paging: false,
             searching: false
         });
