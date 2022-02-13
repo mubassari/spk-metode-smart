@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Nilai;
+use App\Models\Kriteria;
+use App\Models\Parameter;
+use App\Models\Alternatif;
+use App\Http\Requests\FormNilaiRequest;
 use Illuminate\Http\Request;
 
 class NilaiController extends Controller
@@ -14,7 +18,21 @@ class NilaiController extends Controller
      */
     public function index()
     {
-        //
+        $kriteria = Kriteria::all();
+        $alternatif = Alternatif::all();
+        $nilai_temp = Nilai::select("nilai.id_alternatif", "parameter.nama")->join("parameter", "parameter.id", "=", "nilai.id_parameter")->get();
+        $nilai = collect();
+        foreach ($alternatif as $value) {
+            $nilai->push($nilai_temp->filter(function ($item) use ($value) {
+                return $item->id_alternatif == $value->id;
+            })->all());
+        }
+
+        return view('nilai.index', [
+            'kriteria_' => $kriteria,
+            'nilai_' => $nilai,
+            'alternatif_' => $alternatif
+        ]);
     }
 
     /**
@@ -33,7 +51,7 @@ class NilaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormNilaiRequest $request)
     {
         //
     }
@@ -57,7 +75,23 @@ class NilaiController extends Controller
      */
     public function edit(Nilai $nilai)
     {
-        //
+        $kriteria = Kriteria::Select('id', 'nama')->get();
+        $param = Parameter::Select('id', 'id_kriteria', 'nama')->get();
+        $alternatif = Nilai::select('id_parameter')->where("id_alternatif", $nilai->id)->get();
+        $parameter = collect();
+
+        foreach ($kriteria as $value) {
+            $parameter->push($param->filter(function ($item) use ($value) {
+                return $item->id_kriteria == $value->id;
+            })->all());
+        }
+
+        return view('nilai.edit', [
+            'kriteria_' => $kriteria,
+            'parameter_' => $parameter,
+            'alternatif' => $nilai,
+            'nilai' => $alternatif
+        ]);
     }
 
     /**
@@ -67,9 +101,19 @@ class NilaiController extends Controller
      * @param  \App\Models\Nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Nilai $nilai)
+    public function update(Nilai $nilai, FormNilaiRequest $request)
     {
-        //
+        // $request->validated();
+
+        foreach ($request->kriteria as $key => $kriteria) {
+            $nilai->updateOrCreate(
+                ['id_alternatif' => $request->alternatif, 'id_kriteria' => $kriteria],
+                ['id_parameter' => $request->nilai[$key + 1]]
+
+            );
+        }
+
+        return redirect(route('nilai.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }
 
     /**

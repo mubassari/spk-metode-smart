@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormParameterRequest extends FormRequest
+class FormNilaiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,18 @@ class FormParameterRequest extends FormRequest
     public function rules()
     {
         return [
+            'id_alternatif' => 'required|exists:alternatif,id',
             'id_kriteria' => 'required|exists:kriteria,id',
-            'nama' => 'required',
-            'bobot' => 'required|numeric'
+            'id_parameter' => 'required|exists:parameter,id',
         ];
     }
-    
+
     public function messages()
     {
         return [
+            'id_alternatif.required' => 'Alternatif harus dipilih',
             'id_kriteria.required' => 'Kriteria harus dipilih',
+            'id_parameter.required' => 'parameter harus dipilih',
         ];
     }
 }

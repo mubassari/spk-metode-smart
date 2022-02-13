@@ -73,12 +73,10 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function update(FormKriteriaRequest $request, Kriteria $kriterium)
+    public function update(Kriteria $kriterium, FormKriteriaRequest $request)
     {
         $request->validated();
-        $kriteria = $kriterium;
-        $kriteria->update($request->only(['nama', 'bobot']));
-
+        $kriterium->update($request->only(['nama', 'bobot']));
         return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }
 
@@ -90,8 +88,7 @@ class KriteriaController extends Controller
      */
     public function destroy(Kriteria $kriterium)
     {
-        $kriteria = $kriterium;
-        $kriteria->delete();
-        return redirect(route('kriteria.index'))->with(['pesan' => "Data $kriteria->nama  berhasil dihapus."]);
+        $kriterium->delete();
+        return redirect(route('kriteria.index'))->with(['pesan' => "Data $kriterium->nama  berhasil dihapus."]);
     }
 }
