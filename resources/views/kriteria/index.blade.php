@@ -26,7 +26,7 @@
                     <td>{{ $kriteria->bobot }}</td>
                     <td class="text-center d-flex justify-content-around">
                         <a href="{{ route('kriteria.edit', [$kriteria->id]) }}" class="btn btn-sm btn-info">Ubah</a>
-                        <form method="POST" action="{{ route('kriteria.destroy', [$kriteria->id]) }}">
+                        <form method="POST" action="{{ route('kriteria.destroy', ['kriterium' => $kriteria->id]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <input type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')" value="Hapus">

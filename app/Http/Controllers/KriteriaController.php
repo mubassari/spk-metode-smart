@@ -60,9 +60,9 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Kriteria $kriterium)
     {
-        $kriteria = Kriteria::find($id);
+        $kriteria = $kriterium;
         return view('kriteria.edit', ['kriteria' => $kriteria]);
     }
 
@@ -73,10 +73,10 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function update($id, FormKriteriaRequest $request)
+    public function update(FormKriteriaRequest $request, Kriteria $kriterium)
     {
         $request->validated();
-        $kriteria = Kriteria::find($id);
+        $kriteria = $kriterium;
         $kriteria->update($request->only(['nama', 'bobot']));
 
         return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
@@ -88,11 +88,10 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Kriteria $kriterium)
     {
-        $kriteria = Kriteria::find($id);
+        $kriteria = $kriterium;
         $kriteria->delete();
-
         return redirect(route('kriteria.index'))->with(['pesan' => "Data $kriteria->nama  berhasil dihapus."]);
     }
 }
