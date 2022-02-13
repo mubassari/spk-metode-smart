@@ -37,10 +37,10 @@ class AlternatifController extends Controller
     public function store(FormAlternatifRequest $request)
     {
         $request->validated();
-        $alternatif = $request->all();
-        Alternatif::create($alternatif);
+        Alternatif::create($request->only(['nama']));
 
-        return redirect(route('alternatif.index'));
+
+        return redirect(route('alternatif.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);;
     }
 
     /**
@@ -49,7 +49,7 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Alternatif $alternatif)
     {
         //
     }
@@ -60,9 +60,8 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Alternatif $alternatif)
     {
-        $alternatif = Alternatif::find($id);
         return view('alternatif.edit', ['alternatif' => $alternatif]);
     }
 
@@ -73,14 +72,12 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function update($id, FormAlternatifRequest $request)
+    public function update(Alternatif $alternatif, FormAlternatifRequest $request)
     {
         $request->validated();
-        $input = $request->all();
-        $alternatif = Alternatif::find($id);
-        $alternatif->fill($input)->save();
+        $alternatif->update($request->only(['nama']));
 
-        return redirect(route('alternatif.index'));
+        return redirect(route('alternatif.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }
 
     /**
@@ -89,11 +86,10 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Alternatif $alternatif)
     {
-        $alternatif = Alternatif::find($id);
         $alternatif->delete();
 
-        return redirect(route('alternatif.index'));
+        return redirect(route('alternatif.index'))->with(['pesan' => "Data $alternatif->nama  berhasil dihapus."]);
     }
 }

@@ -37,8 +37,7 @@ class KriteriaController extends Controller
     public function store(FormKriteriaRequest $request)
     {
         $request->validated();
-        $kriteria = $request->all();
-        Kriteria::create($kriteria);
+        Kriteria::create($request->only(['nama', 'bobot']));
 
         return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);
     }
@@ -49,7 +48,7 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Kriteria $kriteria)
     {
         //
     }
@@ -77,9 +76,8 @@ class KriteriaController extends Controller
     public function update($id, FormKriteriaRequest $request)
     {
         $request->validated();
-        $input = $request->all();
         $kriteria = Kriteria::find($id);
-        $kriteria->fill($input)->save();
+        $kriteria->update($request->only(['nama', 'bobot']));
 
         return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }

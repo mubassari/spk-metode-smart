@@ -41,6 +41,7 @@ class ParameterController extends Controller
     {
         $request->validated();
         Parameter::create($request->only(['id_kriteria', 'nama', 'bobot']));
+        
         return redirect(route('parameter.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);
     }
 
@@ -80,6 +81,7 @@ class ParameterController extends Controller
     {
         $request->validated();
         $parameter->update($request->only(['id_kriteria', 'nama', 'bobot']));
+
         return redirect(route('parameter.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }
 
@@ -92,6 +94,7 @@ class ParameterController extends Controller
     public function destroy(Parameter $parameter)
     {
         $parameter->delete();
+
         return redirect(route('parameter.index'))->with(['pesan' => "Data $parameter->nama  berhasil dihapus."]);
     }
 }

@@ -9,5 +9,5 @@ class Alternatif extends Model
 {
     use HasFactory;
     protected $table = 'alternatif';
-    protected $guarded = [];
+    protected $fillable = ['nama'];
 }
