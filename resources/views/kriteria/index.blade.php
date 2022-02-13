@@ -1,12 +1,7 @@
 @extends('layouts.main')
 @section('content')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tampil Data Kriteria</h1>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('kriteria.index') }}">Kriteria</a></li>
-        <li class="breadcrumb-item">Tampil Data</li>
-    </ol>
-</div>
+<x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kreteria" subItem="Tampil Data" />
+<x-alertmessage />
 <div class="card mb-3">
     <div class="card-header d-flex flex-row align-items-end justify-content-end">
         <a href="{{ route('kriteria.create') }}" class="btn btn-primary">Tambah Kriteria</a>

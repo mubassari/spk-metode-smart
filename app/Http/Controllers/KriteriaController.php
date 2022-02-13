@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kriteria;
-use Illuminate\Http\Request;
 use App\Http\Requests\FormKriteriaRequest;
 
 class KriteriaController extends Controller
@@ -41,7 +40,7 @@ class KriteriaController extends Controller
         $kriteria = $request->all();
         Kriteria::create($kriteria);
 
-        return redirect(route('kriteria.index'));
+        return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);
     }
 
     /**
@@ -56,7 +55,8 @@ class KriteriaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show
+     * the form for editing the specified resource.
      *
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
@@ -81,7 +81,7 @@ class KriteriaController extends Controller
         $kriteria = Kriteria::find($id);
         $kriteria->fill($input)->save();
 
-        return redirect(route('kriteria.index'));
+        return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
     }
 
     /**
@@ -95,6 +95,6 @@ class KriteriaController extends Controller
         $kriteria = Kriteria::find($id);
         $kriteria->delete();
 
-        return redirect(route('kriteria.index'));
+        return redirect(route('kriteria.index'))->with(['pesan' => "Data $kriteria->nama  berhasil dihapus."]);
     }
 }
