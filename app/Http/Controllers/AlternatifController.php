@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
-use Illuminate\Http\Request;
+use App\Http\Requests\FormAlternatifRequest;
 
 class AlternatifController extends Controller
 {
@@ -14,7 +14,8 @@ class AlternatifController extends Controller
      */
     public function index()
     {
-        //
+        $alternatif =  Alternatif::all();
+        return view('alternatif.index', ['alternatif_' => $alternatif]);
     }
 
     /**
@@ -24,7 +25,7 @@ class AlternatifController extends Controller
      */
     public function create()
     {
-        //
+        return view('alternatif.create');
     }
 
     /**
@@ -33,9 +34,13 @@ class AlternatifController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormAlternatifRequest $request)
     {
-        //
+        $request->validated();
+        $alternatif = $request->all();
+        Alternatif::create($alternatif);
+
+        return redirect(route('alternatif.index'));
     }
 
     /**
@@ -44,7 +49,7 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function show(Alternatif $alternatif)
+    public function show($id)
     {
         //
     }
@@ -55,9 +60,10 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function edit(Alternatif $alternatif)
+    public function edit($id)
     {
-        //
+        $alternatif = Alternatif::find($id);
+        return view('alternatif.edit', ['alternatif' => $alternatif]);
     }
 
     /**
@@ -67,9 +73,14 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Alternatif $alternatif)
+    public function update($id, FormAlternatifRequest $request)
     {
-        //
+        $request->validated();
+        $input = $request->all();
+        $alternatif = Alternatif::find($id);
+        $alternatif->fill($input)->save();
+
+        return redirect(route('alternatif.index'));
     }
 
     /**
@@ -78,8 +89,11 @@ class AlternatifController extends Controller
      * @param  \App\Models\Alternatif  $alternatif
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Alternatif $alternatif)
+    public function destroy($id)
     {
-        //
+        $alternatif = Alternatif::find($id);
+        $alternatif->delete();
+
+        return redirect(route('alternatif.index'));
     }
 }

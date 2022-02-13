@@ -36,7 +36,7 @@
             <div id="collapseTable2" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tambah Data</h6>
-                <a class="collapse-item" href="simple-tables.html">Alternatif</a>
+                <a class="collapse-item" href="{{ route('alternatif.index') }}"">Alternatif</a>
                 <a class="collapse-item" href="datatables.html">Nilai Alternatif</a>
             </div>
             </div>

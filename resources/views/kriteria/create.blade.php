@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="input-bobot">Bobot Kriteria</label>
             <div class="input-group">
-                <input type="text" class="form-control @error('bobot') is-invalid @enderror" id="input-bobot" name="bobot" placeholder="Masukkan Bobot Kriteria" value="{{ old('bobot') }}">
+                <input type="text" class="form-control @error('bobot') is-invalid @enderror" id="input-bobot" name="bobot" placeholder="Masukkan Bobot Kriteria" value="{{ old('bobot') }}" onkeypress="return checkNumber(event)">
                 <div class="input-group-append">
                     <span class="input-group-text">%</span>
                 </div>
@@ -27,6 +27,9 @@
     </div>
 @endsection
 <script>
+    function checkNumber(value) {
+        return /(^\d+$)/.test(value.key);
+    }
     function resetButton(nama = "", bobot = "") {
         document.getElementById('input-nama').value = nama;
         document.getElementById('input-bobot').value = bobot;

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\AlternatifController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,4 @@ Route::get('/', function () {
 });
 Route::resource('kriteria', KriteriaController::class)->except(['show']);
 Route::resource('parameter', ParameterController::class)->except(['show']);
+Route::resource('alternatif', AlternatifController::class)->except(['show']);

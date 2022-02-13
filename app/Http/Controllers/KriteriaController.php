@@ -49,7 +49,7 @@ class KriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function show(Kriteria $kriteria)
+    public function show($id)
     {
         //
     }
