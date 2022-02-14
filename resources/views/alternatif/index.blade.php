@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('content')
 <x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kriteria" subItem="Tampil Data" />
-<x-alertmessage />
 <div class="card mb-3">
     <div class="card-header d-flex flex-row align-items-end justify-content-end">
         <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Tambah Alternatif</a>

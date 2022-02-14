@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('content')
 <x-breadcrumb title="Tampil Data Nilai" link="{{ route('nilai.index') }}" item="Nilai" subItem="Tampil Data" />
-<x-alertmessage />
 <div class="card mb-3">
     <div class="table-responsive p-3">
         <table class="table align-items-center table-hover table-flush" id="nilai">
