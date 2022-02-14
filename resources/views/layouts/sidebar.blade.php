@@ -42,7 +42,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="{{ route('perhitungan.kalkulasi') }}">
                 <i class="fas fa-puzzle-piece"></i>
                 <span>Perhitungan</span>
             </a>

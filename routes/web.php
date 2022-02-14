@@ -4,6 +4,7 @@ use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PerhitunganController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,4 @@ Route::resource('parameter', ParameterController::class)->except(['show']);
 Route::resource('alternatif', AlternatifController::class)->except(['show']);
 Route::resource('alternatif', AlternatifController::class)->except(['show']);
 Route::resource('nilai', NilaiController::class)->only(['index', 'edit', 'update']);
+Route::get('perhitungan', [PerhitunganController::class, 'kalkulasi'])->name('perhitungan.kalkulasi');
