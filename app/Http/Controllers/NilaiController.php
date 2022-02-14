@@ -20,14 +20,13 @@ class NilaiController extends Controller
     {
         $kriteria = Kriteria::all();
         $alternatif = Alternatif::all();
-        $nilai_temp = Nilai::select("nilai.id_alternatif", "parameter.nama")->join("parameter", "parameter.id", "=", "nilai.id_parameter")->orderBy('id_alternatif')->get();
+        $nilai_temp = Nilai::select("nilai.id_alternatif", "parameter.nama")->join("parameter", "parameter.id", "=", "nilai.id_parameter")->orderBy('id_alternatif')->orderBy('nilai.id_kriteria')->get();
         $nilai = collect();
         foreach ($alternatif as $value) {
             $nilai->push($nilai_temp->filter(function ($item) use ($value) {
                 return $item->id_alternatif == $value->id;
             })->all());
         }
-
         return view('nilai.index', [
             'kriteria_' => $kriteria,
             'nilai_' => $nilai,
