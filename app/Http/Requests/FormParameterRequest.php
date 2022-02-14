@@ -29,11 +29,11 @@ class FormParameterRequest extends FormRequest
             'bobot' => 'required|numeric'
         ];
     }
-    
+
     public function messages()
     {
         return [
-            'id_kriteria.required' => 'Kriteria harus dipilih',
+            'id_kriteria.required' => 'Inputan Kriteria harus dipilih.',
         ];
     }
 }

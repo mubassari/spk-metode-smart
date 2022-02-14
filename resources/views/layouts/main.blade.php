@@ -19,10 +19,6 @@
         th {
             text-align: center;
         }
-
-        tr>td {
-            white-space: nowrap !important;
-        }
     </style>
 </head>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Kriteria;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FormNilaiRequest extends FormRequest
@@ -30,8 +31,12 @@ class FormNilaiRequest extends FormRequest
 
     public function messages()
     {
-        return [
-            'nilai.*.required' => 'Inputan ini harus dipilih',
-        ];
+        $messages = [];
+        $kriteria = Kriteria::all();
+        foreach ($this->get('nilai') as $key => $value) {
+            $messages['nilai.'.$key.'.required'] = 'Inputan '.$kriteria[$key-1]->nama.' harus dipilih.';
+        }
+
+        return $messages;
     }
 }
