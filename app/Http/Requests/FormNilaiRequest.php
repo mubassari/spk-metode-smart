@@ -24,18 +24,14 @@ class FormNilaiRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_alternatif' => 'required|exists:alternatif,id',
-            'id_kriteria' => 'required|exists:kriteria,id',
-            'id_parameter' => 'required|exists:parameter,id',
+            'nilai.*' => 'required|exists:parameter,id',
         ];
     }
 
     public function messages()
     {
         return [
-            'id_alternatif.required' => 'Alternatif harus dipilih',
-            'id_kriteria.required' => 'Kriteria harus dipilih',
-            'id_parameter.required' => 'parameter harus dipilih',
+            'nilai.*.required' => 'Inputan ini harus dipilih',
         ];
     }
 }

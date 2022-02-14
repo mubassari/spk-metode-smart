@@ -7,7 +7,7 @@ use App\Models\Kriteria;
 use App\Models\Parameter;
 use App\Models\Alternatif;
 use App\Http\Requests\FormNilaiRequest;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NilaiController extends Controller
 {
@@ -20,7 +20,7 @@ class NilaiController extends Controller
     {
         $kriteria = Kriteria::all();
         $alternatif = Alternatif::all();
-        $nilai_temp = Nilai::select("nilai.id_alternatif", "parameter.nama")->join("parameter", "parameter.id", "=", "nilai.id_parameter")->get();
+        $nilai_temp = Nilai::select("nilai.id_alternatif", "parameter.nama")->join("parameter", "parameter.id", "=", "nilai.id_parameter")->orderBy('id_alternatif')->get();
         $nilai = collect();
         foreach ($alternatif as $value) {
             $nilai->push($nilai_temp->filter(function ($item) use ($value) {
@@ -76,12 +76,12 @@ class NilaiController extends Controller
     public function edit(Nilai $nilai)
     {
         $kriteria = Kriteria::Select('id', 'nama')->get();
-        $param = Parameter::Select('id', 'id_kriteria', 'nama')->get();
+        $param_temp = Parameter::Select('id', 'id_kriteria', 'nama')->get();
         $alternatif = Nilai::select('id_parameter')->where("id_alternatif", $nilai->id)->get();
         $parameter = collect();
 
         foreach ($kriteria as $value) {
-            $parameter->push($param->filter(function ($item) use ($value) {
+            $parameter->push($param_temp->filter(function ($item) use ($value) {
                 return $item->id_kriteria == $value->id;
             })->all());
         }
@@ -103,17 +103,22 @@ class NilaiController extends Controller
      */
     public function update(Nilai $nilai, FormNilaiRequest $request)
     {
-        // $request->validated();
+        $request->validated();
 
-        foreach ($request->kriteria as $key => $kriteria) {
-            $nilai->updateOrCreate(
-                ['id_alternatif' => $request->alternatif, 'id_kriteria' => $kriteria],
-                ['id_parameter' => $request->nilai[$key + 1]]
-
-            );
+        try {
+            DB::beginTransaction();
+            foreach ($request->kriteria as $key => $kriteria) {
+                $nilai->updateOrCreate(
+                    ['id_alternatif' => $request->alternatif, 'id_kriteria' => $kriteria],
+                    ['id_parameter' => $request->nilai[$key + 1]]
+                );
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
         }
 
-        return redirect(route('nilai.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
+        return redirect()->route('nilai.index')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
     }
 
     /**

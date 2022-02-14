@@ -13,7 +13,7 @@
                     <th>No</th>
                     <th>Kode</th>
                     <th>Nama Alternatif</th>
-                    <th class="text-center">Opsi</th>
+                    <th data-orderable="false">Opsi</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>A{{ str_pad($alternatif->id, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $alternatif->nama }}</td>
-                    <td class="text-center d-flex justify-content-around">
+                    <td class="d-flex justify-content-around">
                         <a href="{{ route('alternatif.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
                         <form method="POST" action="{{ route('alternatif.destroy', [$alternatif->id]) }}">
                             {{ csrf_field() }}

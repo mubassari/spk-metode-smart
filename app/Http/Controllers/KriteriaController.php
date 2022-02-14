@@ -39,7 +39,7 @@ class KriteriaController extends Controller
         $request->validated();
         Kriteria::create($request->only(['nama', 'bobot']));
 
-        return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);
+        return redirect()->route('kriteria.index')->with(['pesan' => "Data $request->nama berhasil ditambahkan."]);
     }
 
     /**
@@ -77,7 +77,8 @@ class KriteriaController extends Controller
     {
         $request->validated();
         $kriterium->update($request->only(['nama', 'bobot']));
-        return redirect(route('kriteria.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
+
+        return redirect()->route('kriteria.index')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
     }
 
     /**
@@ -89,6 +90,7 @@ class KriteriaController extends Controller
     public function destroy(Kriteria $kriterium)
     {
         $kriterium->delete();
-        return redirect(route('kriteria.index'))->with(['pesan' => "Data $kriterium->nama  berhasil dihapus."]);
+
+        return redirect()->route('kriteria.index')->with(['pesan' => "Data $kriterium->nama berhasil dihapus."]);
     }
 }

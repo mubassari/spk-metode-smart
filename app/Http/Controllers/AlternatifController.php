@@ -40,7 +40,7 @@ class AlternatifController extends Controller
         Alternatif::create($request->only(['nama']));
 
 
-        return redirect(route('alternatif.index'))->with(['pesan' => "Data $request->nama  berhasil ditambahkan."]);;
+        return redirect()->route('alternatif.index')->with(['pesan' => "Data $request->nama berhasil ditambahkan."]);;
     }
 
     /**
@@ -77,7 +77,7 @@ class AlternatifController extends Controller
         $request->validated();
         $alternatif->update($request->only(['nama']));
 
-        return redirect(route('alternatif.index'))->with(['pesan' => "Data $request->nama  berhasil diperbarui."]);
+        return redirect()->route('alternatif.index')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
     }
 
     /**
@@ -90,6 +90,6 @@ class AlternatifController extends Controller
     {
         $alternatif->delete();
 
-        return redirect(route('alternatif.index'))->with(['pesan' => "Data $alternatif->nama  berhasil dihapus."]);
+        return redirect()->route('alternatif.index')->with(['pesan' => "Data $alternatif->nama berhasil dihapus."]);
     }
 }

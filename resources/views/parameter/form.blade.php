@@ -1,7 +1,7 @@
 <div class="form-group">
     <label for="input-kriteria">Pilih Kriteria</label>
     <select name="id_kriteria" id="input-kriteria" class="form-control @error('id_kriteria') is-invalid @enderror">
-        <option value="" disabled>Pilih</option>
+        <option value="">Pilih</option>
         @foreach ($kriteria as $kriteria)
             <option {{ old('id_kriteria', ($parameter->id_kriteria ?? '')) == $kriteria->id ? 'selected' : '' }} value="{{ $kriteria->id }}">{{ $kriteria->nama }}</option>
         @endforeach

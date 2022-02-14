@@ -14,7 +14,7 @@
                     <th>Kode</th>
                     <th>Nama Kriteria</th>
                     <th>Bobot Kriteria</th>
-                    <th class="text-center">Opsi</th>
+                    <th data-orderable="false">Opsi</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +23,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>C{{ str_pad($kriteria->id, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $kriteria->nama }}</td>
-                    <td>{{ $kriteria->bobot }}</td>
-                    <td class="text-center d-flex justify-content-around">
+                    <td>{{ $kriteria->bobot }}%</td>
+                    <td class="d-flex justify-content-around">
                         <a href="{{ route('kriteria.edit', [$kriteria->id]) }}" class="btn btn-sm btn-info">Ubah</a>
                         <form method="POST" action="{{ route('kriteria.destroy', ['kriterium' => $kriteria->id]) }}">
                             {{ csrf_field() }}

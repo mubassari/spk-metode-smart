@@ -3,9 +3,6 @@
 <x-breadcrumb title="Tampil Data Nilai" link="{{ route('nilai.index') }}" item="Nilai" subItem="Tampil Data" />
 <x-alertmessage />
 <div class="card mb-3">
-    {{-- <div class="card-header d-flex flex-row align-items-end justify-content-end">
-        <a href="{{ route('nilai.create') }}" class="btn btn-primary">Tambah Nilai</a>
-    </div> --}}
     <div class="table-responsive p-3">
         <table class="table align-items-center table-hover table-flush" id="nilai">
             <thead class="thead-light">
@@ -13,9 +10,9 @@
                     <th>No</th>
                     <th>Nama Alternatif</th>
                     @foreach ($kriteria_ as $kriteria)
-                        <th>{{ $kriteria->nama }}</th>
+                    <th>{{ $kriteria->nama }}</th>
                     @endforeach
-                    <th class="text-center">Opsi</th>
+                    <th data-orderable="false">Opsi</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,16 +20,10 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $alternatif->nama }}</td>
-                    @if (empty($nilai_[$key]))
-                        <td colspan="{{ count($kriteria_) }}"></td>
-                    @else
-                        @foreach ($nilai_[$key] as $nilai)
-                            <td>
-                                {{ $nilai->nama }}
-                            </td>
-                        @endforeach
-                    @endif
-                    <td class="text-center">
+                    @foreach (($nilai_[$key] ?: $kriteria_) as $nilai)
+                    <td>{{ empty($nilai_[$key]) ? '' : $nilai->nama }}</td>
+                    @endforeach
+                    <td>
                         <a href="{{ route('nilai.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
                     </td>
                 </tr>
@@ -47,7 +38,6 @@
 <script>
     $(document).ready(function ()   {
         $('#nilai').DataTable({
-            info: false,
             paging: false,
             searching: false
         });
