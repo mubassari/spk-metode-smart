@@ -33,14 +33,14 @@
                                     <form class="user mb-5" action="{{ route('login') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" name="email" class="form-control" @error('email')
+                                            <input type="text" name="email" class="form-control @error('email')
                                                 is-invalid @enderror" placeholder="Masukkan Email"
                                                 value="{{ old('email', '') }}">
                                             <x-errormessage error="email" />
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <input type="password" name="password" class="form-control password"
+                                                <input type="password" name="password" class="form-control password
                                                     @error('password') is-invalid @enderror"
                                                     placeholder="Masukkan Password">
                                                 <div class="input-group-append toggle-password">
@@ -48,8 +48,8 @@
                                                         <i class="fas fa-eye-slash toggle-password-icon"></i>
                                                     </span>
                                                 </div>
+                                                <x-errormessage error="password" />
                                             </div>
-                                            <x-errormessage error="password" />
                                         </div>
                                         <button class="bnt btn-lg btn-primary btn-block" type="submit">Masuk</button>
                                     </form>

@@ -33,40 +33,40 @@
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" name="nama"
-                                                class="form-control" @error('nama') is-invalid @enderror"
+                                                class="form-control @error('nama') is-invalid @enderror"
                                                 placeholder="Masukkan Nama" value="{{ old('nama', '') }}">
                                             <x-errormessage error="nama" />
                                         </div>
                                         <div class="form-group">
                                             <input type="text" name="email"
-                                                class="form-control" @error('email') is-invalid @enderror"
+                                                class="form-control @error('email') is-invalid @enderror"
                                                 placeholder="Masukkan Email" value="{{ old('nama', '') }}">
                                             <x-errormessage error="email" />
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <input type="password" name="password"
-                                                    class="form-control password" @error('password') is-invalid @enderror"
+                                                    class="form-control password @error('password') is-invalid @enderror"
                                                     placeholder="Masukkan Password">
                                                 <div class="input-group-append toggle-password">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-eye-slash toggle-password-icon"></i>
                                                     </span>
                                                 </div>
+                                                <x-errormessage error="password" />
                                             </div>
-                                            <x-errormessage error="password" />
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <input type="password" name="konfirmasi_password"
-                                                    class="form-control password" @error('password') is-invalid @enderror"
+                                                    class="form-control password @error('password') is-invalid @enderror"
                                                     placeholder="Konfirmasi Password">
-                                                <x-errormessage error="konfirmasi_password" />
                                                 <div class="input-group-append toggle-password">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-eye-slash toggle-password-icon"></i>
                                                     </span>
                                                 </div>
+                                                <x-errormessage error="konfirmasi_password" />
                                             </div>
                                         </div>
                                         <button class="btn btn-lg btn-primary btn-block" type="submit">Daftar</button>
