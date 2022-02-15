@@ -31,8 +31,8 @@
                 <!-- TopBar -->
                 @include('layouts.navbar')
                 <!-- Topbar -->
-                @if (session()->has('pesan'))
-                <x-toast message="{{ session()->get('pesan'); }}" />
+                @if (session()->has('pesan', 'status'))
+                <x-toast message="{{ session()->get('pesan'); }}" status="{{ session()->get('status'); }}" />
                 @endif
                 <!-- Container Fluid-->
                 <div class="container-fluid" id="container-wrapper">

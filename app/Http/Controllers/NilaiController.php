@@ -117,7 +117,7 @@ class NilaiController extends Controller
             DB::rollback();
         }
 
-        return redirect()->route('nilai.index')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
+        return redirect()->route('nilai.index')->with('status', 'success')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
     }
 
     /**

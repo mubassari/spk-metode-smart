@@ -15,8 +15,8 @@
 </head>
 
 <body class="bg-gradient-login">
-    @if (session()->has('pesan'))
-    <x-toast message="{{ session()->get('pesan'); }}" />
+    @if (session()->has('pesan', 'status'))
+    <x-toast message="{{ session()->get('pesan'); }}" status="{{ session()->get('status'); }}" />
     @endif
     <!-- Login Content -->
     <div class="container-login">
@@ -31,7 +31,7 @@
                                         <h1 class="h4 text-gray-900 mb-4">Login</h1>
                                     </div>
                                     <form class="user mb-5" action="{{ route('login') }}" method="POST">
-                                        @csrf
+                                        {{ csrf_field() }}
                                         <div class="form-group">
                                             <input type="text" name="email" class="form-control @error('email')
                                                 is-invalid @enderror" placeholder="Masukkan Email"

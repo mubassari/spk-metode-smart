@@ -19,6 +19,6 @@ class RegisterController extends Controller
         $newUser['password'] = \Illuminate\Support\Facades\Hash::make($newUser['password']);
         User::create($newUser);
 
-        return redirect('login')->with(['pesan' => 'Berhasil membuat akun, silakan login untuk masuk kehalaman website.']);
+        return redirect('login')->with('status', 'success')->with(['pesan' => 'Berhasil membuat akun, silakan login untuk masuk kehalaman website.']);
     }
 }

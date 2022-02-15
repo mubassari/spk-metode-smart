@@ -15,9 +15,9 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('beranda')->with('pesan', 'Berhasil Masuk');
+            return redirect()->route('beranda')->with('status', 'success')->with('pesan', 'Berhasil Masuk');
         } else {
-            return redirect('login')->with('pesan', 'Email atau password tidak dikenali');
+            return redirect()->route('login')->with('status', 'danger')->with('pesan', 'Email atau password tidak dikenali');
         }
     }
 
@@ -26,6 +26,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')->with('pesan', 'Berhasil Keluar');
+        return redirect()->route('login')->with('status', 'success')->with('pesan', 'Berhasil Keluar');
     }
 }
