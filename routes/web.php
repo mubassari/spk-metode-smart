@@ -20,22 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('beranda');
-});
-
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/', function () { return view('beranda'); })->name('beranda');
+Route::get('login', function () { return view('auth.login'); })->name('login');
 Route::post('login', [LoginController::class, 'prosesLogin'])->name('login');
-
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get('register', function () { return view('auth.register'); })->name('register');
 Route::post('register', [RegisterController::class, 'prosesRegister'])->name('register');
-
 Route::middleware(['auth'])->group(function () {
     Route::resource('kriteria', KriteriaController::class)->except(['show']);
     Route::resource('parameter', ParameterController::class)->except(['show']);

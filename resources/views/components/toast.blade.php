@@ -1,6 +1,6 @@
-<div style="z-index: 3; position: absolute; right:1rem;">
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-        <div class="toast bg-light">
+<div style="z-index: 3; position: absolute; right: 1rem; bottom: 1.5rem; width: 20rem;">
+    <div aria-live="polite" aria-atomic="true" class="d-flex flex-column-reverse" style="position: relative;">
+        <div class="toast bg-light mb-3">
             <div class="toast-header bg-success"></div>
             <div class="toast-body ">
                 {{ html_entity_decode($message) }}
@@ -8,7 +8,6 @@
         </div>
     </div>
 </div>
-
 @push('script')
 <script>
     $(document).ready(function(){

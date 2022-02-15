@@ -1,9 +1,12 @@
 @extends('layouts.main')
 @section('content')
+@push('style')
+<link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
 <x-breadcrumb title="Tampil Data Nilai" link="{{ route('nilai.index') }}" item="Nilai" subItem="Tampil Data" />
 <div class="card mb-3">
     <div class="table-responsive p-3">
-        <table class="table align-items-center table-hover table-flush" id="nilai">
+        <table class="table align-items-center table-hover table-bordered" id="nilai">
             <thead class="thead-light">
                 <tr>
                     <th>No</th>
@@ -34,9 +37,12 @@
 @endsection
 
 @push('script')
+<script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function ()   {
         $('#nilai').DataTable({
+            info: false,
             paging: false,
             searching: false
         });

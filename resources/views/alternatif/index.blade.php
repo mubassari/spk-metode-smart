@@ -1,12 +1,15 @@
 @extends('layouts.main')
 @section('content')
+@push('style')
+<link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
 <x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kriteria" subItem="Tampil Data" />
 <div class="card mb-3">
     <div class="card-header d-flex flex-row align-items-end justify-content-end">
         <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Tambah Alternatif</a>
     </div>
-    <div class="table-responsive  p-3">
-        <table class="table align-items-center table-hover table-flush" id="alternatif">
+    <div class="table-responsive px-3 pb-3">
+        <table class="table align-items-center table-hover table-bordered" id="alternatif">
             <thead class="thead-light">
                 <tr>
                     <th>No</th>
@@ -39,9 +42,12 @@
 @endsection
 
 @push('script')
+<script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function ()   {
         $('#alternatif').DataTable({
+            info: false,
             paging: false,
             searching: false
         });

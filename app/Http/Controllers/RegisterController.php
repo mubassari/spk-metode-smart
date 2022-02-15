@@ -13,10 +13,12 @@ class RegisterController extends Controller
             'nama' => 'required',
             'email' => 'email|required|unique:users,email',
             'password' => 'required|min:4|confirmed',
-            'password_confirmation' => 'required',
+            'konfirmasi_password' => 'required|same:password',
         ]);
+
         $newUser['password'] = \Illuminate\Support\Facades\Hash::make($newUser['password']);
-        $user = User::create($newUser);
+        User::create($newUser);
+
         return redirect('login')->with(['pesan' => 'Berhasil membuat akun, silakan login untuk masuk kehalaman website.']);
     }
 }

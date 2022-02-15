@@ -1,12 +1,12 @@
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('beranda') }}">
         <div class="sidebar-brand-icon">
             <img src="{{ asset('assets/img/logo/logo2.png') }}">
         </div>
         <div class="sidebar-brand-text mx-3">E-SPK-SMART</div>
     </a>
         <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="{{ route('beranda') }}">
                 <i class="fas fa-home"></i>
                 <span>Beranda</span>
             </a>

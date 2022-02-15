@@ -1,12 +1,15 @@
 @extends('layouts.main')
 @section('content')
+@push('style')
+<link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
 <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Kriteria</h4>
     </div>
     <div class="table-responsive px-3">
-        <table class="table align-items-center table-hover table-flush">
+        <table class="table align-items-center table-hover table-bordered">
             <thead class="thead-light">
                 <tr>
                     @foreach ($kriteria_ as $kriteria)
@@ -47,7 +50,7 @@
         <h4 class="m-0 font-weight-bold text-primary">Data Alternatif</h4>
     </div>
     <div class="table-responsive px-3 pb-3">
-        <table class="table align-items-center table-hover table-flush">
+        <table class="table align-items-center table-hover table-bordered">
             <thead class="thead-light">
                 <tr>
                     <th>Alternatif</th>
@@ -74,7 +77,7 @@
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Data Alternatif</h4>
     </div>
     <div class="table-responsive px-3 pb-3">
-        <table class="table align-items-center table-hover table-flush" id="hasil">
+        <table class="table align-items-center table-hover table-bordered" id="hasil">
             <thead class="thead-light">
                 <tr>
                     <th>Alternatif</th>
@@ -106,6 +109,8 @@
 @endsection
 
 @push('script')
+<script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function ()   {
         $('#hasil').DataTable({
