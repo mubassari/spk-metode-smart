@@ -2,9 +2,11 @@
 @section('content')
 <x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kriteria" subItem="Tampil Data" />
 <div class="card mb-3">
-    <div class="card-header d-flex flex-row align-items-end justify-content-end">
-        <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Tambah Alternatif</a>
-    </div>
+    @if (auth()->user()->level === 'admin')
+        <div class="card-header d-flex flex-row align-items-end justify-content-end">
+            <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Tambah Alternatif</a>
+        </div>
+    @endif
     <div class="table-responsive  p-3">
         <table class="table align-items-center table-hover table-flush" id="alternatif">
             <thead class="thead-light">
@@ -12,7 +14,9 @@
                     <th>No</th>
                     <th>Kode</th>
                     <th>Nama Alternatif</th>
-                    <th data-orderable="false">Opsi</th>
+                    @if (auth()->user()->level === 'admin')
+                        <th data-orderable="false">Opsi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -21,15 +25,17 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>A{{ str_pad($alternatif->id, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $alternatif->nama }}</td>
-                    <td class="d-flex justify-content-around">
-                        <a href="{{ route('alternatif.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
-                        <form method="POST" action="{{ route('alternatif.destroy', [$alternatif->id]) }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <input type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Hapus data ini?')" value="Hapus">
-                        </form>
-                    </td>
+                    @if (auth()->user()->level === 'admin')
+                        <td class="d-flex justify-content-around">
+                            <a href="{{ route('alternatif.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
+                            <form method="POST" action="{{ route('alternatif.destroy', [$alternatif->id]) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <input type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Hapus data ini?')" value="Hapus">
+                            </form>
+                        </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>

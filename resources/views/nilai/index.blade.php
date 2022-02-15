@@ -11,7 +11,9 @@
                     @foreach ($kriteria_ as $kriteria)
                     <th>{{ $kriteria->nama }}</th>
                     @endforeach
-                    <th data-orderable="false">Opsi</th>
+                    @if (auth()->user()->level === 'admin')
+                        <th data-orderable="false">Opsi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -22,9 +24,11 @@
                     @foreach (($nilai_[$key] ?: $kriteria_) as $nilai)
                     <td>{{ empty($nilai_[$key]) ? '' : $nilai->nama }}</td>
                     @endforeach
-                    <td>
-                        <a href="{{ route('nilai.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
-                    </td>
+                    @if (auth()->user()->level === 'admin')
+                        <td>
+                            <a href="{{ route('nilai.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
+                        </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>

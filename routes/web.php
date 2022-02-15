@@ -22,11 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('beranda');
-});
+})->name('beranda');
+
 
 Route::get('login', function () {
     return view('auth.login');
-})->name('login');
+})->name('login')->middleware('guest');
 Route::post('login', [LoginController::class, 'prosesLogin'])->name('login');
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');

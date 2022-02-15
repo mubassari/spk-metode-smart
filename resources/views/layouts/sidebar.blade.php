@@ -5,8 +5,8 @@
         </div>
         <div class="sidebar-brand-text mx-3">E-SPK-SMART</div>
     </a>
-        <li class="nav-item">
-            <a class="nav-link" href="/">
+        <li class="nav-item {{ Route::currentRouteName('beranda') === 'beranda' ? 'active' : '' }}">
+            <a class="nav-link href="{{ route('beranda') }}">
                 <i class="fas fa-home"></i>
                 <span>Beranda</span>
             </a>
@@ -52,7 +52,7 @@
             <div class="sidebar-heading">
                 fitur
             </div>
-            <li class="nav-item {{ Route::currentRouteName('perhitungan.kalkulasi') ? 'active' : '' }}">
+            <li class="nav-item {{ Route::currentRouteName('perhitungan.kalkulasi') === 'perhitungan.kalkulasi' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('perhitungan.kalkulasi') }}">
                     <i class="fas fa-puzzle-piece"></i>
                     <span>Perhitungan</span>
@@ -68,6 +68,12 @@
                 </a>
             </li>
         @else
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Masuk</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('register') }}">
                     <i class="fas fa-quidditch"></i>
