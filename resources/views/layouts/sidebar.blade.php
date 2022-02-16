@@ -6,7 +6,7 @@
         <div class="sidebar-brand-text mx-3">E-SPK-SMART</div>
     </a>
         <li class="nav-item {{ Route::currentRouteName('beranda') === 'beranda' ? 'active' : '' }}">
-            <a class="nav-link href="{{ route('beranda') }}">
+            <a class="nav-link" href="{{ route('beranda') }}">
                 <i class="fas fa-home"></i>
                 <span>Beranda</span>
             </a>
@@ -52,13 +52,8 @@
             <div class="sidebar-heading">
                 fitur
             </div>
-<<<<<<< HEAD
-            <li class="nav-item {{ Route::currentRouteName('perhitungan.kalkulasi') === 'perhitungan.kalkulasi' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('perhitungan.kalkulasi') }}">
-=======
-            <li class="nav-item {{ Route::currentRouteName('perhitungan.tampil') ? 'active' : '' }}">
+            <li class="nav-item {{ Route::currentRouteName('perhitungan.tampil') === 'perhitungan.tampil' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('perhitungan.tampil') }}">
->>>>>>> 0061359913d862a20c87470f97acb7943269cbd4
                     <i class="fas fa-puzzle-piece"></i>
                     <span>Perhitungan</span>
                 </a>
@@ -78,12 +73,7 @@
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Masuk</span>
                 </a>
-<<<<<<< HEAD
-            </li>
-            <li class="nav-item">
-=======
             </li><li class="nav-item">
->>>>>>> 0061359913d862a20c87470f97acb7943269cbd4
                 <a class="nav-link" href="{{ route('register') }}">
                     <i class="fas fa-quidditch"></i>
                     <span>Daftar</span>

@@ -4,11 +4,13 @@
 @endpush
 @section('content')
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
-<div class="mb-3 d-flex flex-row align-items-end justify-content-end">
-    <a href="{{ route('perhitungan.cetak') }}" class="btn btn-danger">
-        <i class="fas fa-file-pdf"></i> Cetak Data
-    </a>
-</div>
+    @if (auth()->user()->level === 'admin')
+        <div class="mb-3 d-flex flex-row align-items-end justify-content-end">
+            <a href="{{ route('perhitungan.cetak') }}" class="btn btn-danger">
+                <i class="fas fa-file-pdf"></i> Cetak Data
+            </a>
+        </div>
+    @endif
 <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Kriteria</h4>

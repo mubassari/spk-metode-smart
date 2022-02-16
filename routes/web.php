@@ -21,32 +21,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-<<<<<<< HEAD
 Route::get('/', function () {
     return view('beranda');
 })->name('beranda');
-
-
 Route::get('login', function () {
     return view('auth.login');
 })->name('login')->middleware('guest');
-Route::post('login', [LoginController::class, 'prosesLogin'])->name('login');
-
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
+Route::post('login', [UserController::class, 'login'])->name('login');
+Route::post('logout', [UserController::class, 'logout'])->name('logout');
 Route::get('register', function () {
     return view('auth.register');
 })->name('register');
-Route::post('register', [RegisterController::class, 'prosesRegister'])->name('register');
-
-=======
-Route::get('/', function () { return view('beranda'); })->name('beranda');
-Route::get('login', function () { return view('auth.login'); })->name('login');
-Route::post('login', [UserController::class, 'login'])->name('login');
-Route::post('logout', [UserController::class, 'logout'])->name('logout');
-Route::get('register', function () { return view('auth.register'); })->name('register');
 Route::post('register', [UserController::class, 'register'])->name('register');
->>>>>>> 0061359913d862a20c87470f97acb7943269cbd4
 Route::middleware(['auth'])->group(function () {
     Route::resource('kriteria', KriteriaController::class)->except(['show']);
     Route::resource('parameter', ParameterController::class)->except(['show']);

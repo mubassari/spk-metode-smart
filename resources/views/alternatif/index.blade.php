@@ -5,9 +5,11 @@
 @section('content')
 <x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kriteria" subItem="Tampil Data" />
 <div class="card mb-3">
-    <div class="card-header d-flex flex-row align-items-end justify-content-end">
-        <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Tambah Alternatif</a>
-    </div>
+    @if (auth()->user()->level === 'admin')
+        <div class="card-header d-flex flex-row align-items-end justify-content-end">
+            <a href="{{ route('alternatif.create') }}" class="btn btn-primary">Tambah Alternatif</a>
+        </div>
+    @endif
     <div class="table-responsive px-3 pb-3">
         <table class="table align-items-center table-hover table-bordered" id="alternatif">
             <thead class="thead-light">
