@@ -42,7 +42,7 @@ class ParameterController extends Controller
         $request->validated();
         Parameter::create($request->only(['id_kriteria', 'nama', 'bobot']));
 
-        return redirect()->route('parameter.index')->with('status', 'success')->with(['pesan' => "Data $request->nama berhasil ditambahkan."]);
+        return redirect()->route('parameter.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil ditambahkan.");
     }
 
     /**
@@ -82,7 +82,7 @@ class ParameterController extends Controller
         $request->validated();
         $parameter->update($request->only(['id_kriteria', 'nama', 'bobot']));
 
-        return redirect()->route('parameter.index')->with('status', 'success')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
+        return redirect()->route('parameter.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil diperbarui.");
     }
 
     /**
@@ -95,6 +95,6 @@ class ParameterController extends Controller
     {
         $parameter->delete();
 
-        return redirect()->route('parameter.index')->with('status', 'success')->with(['pesan' => "Data $parameter->nama berhasil dihapus."]);
+        return redirect()->route('parameter.index')->with('status', 'success')->with('pesan', "Data $parameter->nama berhasil dihapus.");
     }
 }

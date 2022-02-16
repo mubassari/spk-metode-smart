@@ -1,8 +1,8 @@
 @extends('layouts.main')
-@section('content')
 @push('style')
 <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
+@section('content')
 <x-breadcrumb title="Tampil Data Kriteria" link="{{ route('kriteria.index') }}" item="Kriteria" subItem="Tampil Data" />
 <div class="card mb-3">
     <div class="card-header d-flex flex-row align-items-end justify-content-end">

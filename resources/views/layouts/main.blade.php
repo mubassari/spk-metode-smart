@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="{{ asset('assets/img/logo/logo.png') }}" rel="icon">
-    <title>Aplikasi SPK Metode SMART</title>
+    <title>{{ config('app.name') }}</title>
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/ruang-admin.min.css') }}" rel="stylesheet">
@@ -31,11 +31,11 @@
                 <!-- TopBar -->
                 @include('layouts.navbar')
                 <!-- Topbar -->
-                @if (session()->has('pesan', 'status'))
+                @if (session()->has('pesan'))
                 <x-toast message="{{ session()->get('pesan'); }}" status="{{ session()->get('status'); }}" />
                 @endif
                 <!-- Container Fluid-->
-                <div class="container-fluid" id="container-wrapper">
+                <div class="container" id="container-wrapper">
                     @yield('content')
                 </div>
                 <!---Container Fluid-->

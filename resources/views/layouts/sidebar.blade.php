@@ -52,8 +52,8 @@
             <div class="sidebar-heading">
                 fitur
             </div>
-            <li class="nav-item {{ Route::currentRouteName('perhitungan.kalkulasi') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('perhitungan.kalkulasi') }}">
+            <li class="nav-item {{ Route::currentRouteName('perhitungan.tampil') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('perhitungan.tampil') }}">
                     <i class="fas fa-puzzle-piece"></i>
                     <span>Perhitungan</span>
                 </a>
@@ -63,12 +63,17 @@
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST"style="display: none;">
-                        @csrf
+                        {{ csrf_field() }}
                     </form>
                 </a>
             </li>
         @else
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Masuk</span>
+                </a>
+            </li><li class="nav-item">
                 <a class="nav-link" href="{{ route('register') }}">
                     <i class="fas fa-quidditch"></i>
                     <span>Daftar</span>
