@@ -1,14 +1,15 @@
 @extends('layouts.main')
+@push('style')
+<link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
 @section('content')
 <x-breadcrumb title="Tampil Data Parameter" link="{{ route('kriteria.index') }}" item="Kreteria" subItem="Tampil Data" />
 <div class="card mb-3">
-    @if (auth()->user()->level === 'admin')
-        <div class="card-header d-flex flex-row align-items-end justify-content-end">
-            <a href="{{ route('parameter.create') }}" class="btn btn-primary">Tambah Parameter</a>
-        </div>
-    @endif
-    <div class="table-responsive p-3">
-        <table class="table align-items-center table-hover table-flush" id="parameter">
+    <div class="card-header d-flex flex-row align-items-end justify-content-end">
+        <a href="{{ route('parameter.create') }}" class="btn btn-primary">Tambah Parameter</a>
+    </div>
+    <div class="table-responsive px-3 pb-3">
+        <table class="table align-items-center table-hover table-bordered" id="parameter">
             <thead class="thead-light">
                 <tr>
                     <th>No</th>
@@ -47,9 +48,12 @@
 @endsection
 
 @push('script')
+<script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function ()   {
         $('#parameter').DataTable({
+            info: false,
             paging: false,
             searching: false
         });

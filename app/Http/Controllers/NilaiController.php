@@ -80,7 +80,7 @@ class NilaiController extends Controller
         $parameter = collect();
 
         foreach ($kriteria as $value) {
-            $parameter->push($param_temp->filter(function ($item) use ($value) {
+            $parameter->push((object)$param_temp->filter(function ($item) use ($value) {
                 return $item->id_kriteria == $value->id;
             })->all());
         }
@@ -117,7 +117,7 @@ class NilaiController extends Controller
             DB::rollback();
         }
 
-        return redirect()->route('nilai.index')->with(['pesan' => "Data $request->nama berhasil diperbarui."]);
+        return redirect()->route('nilai.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil diperbarui.");
     }
 
     /**

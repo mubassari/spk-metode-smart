@@ -33,7 +33,7 @@ class FormParameterRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_kriteria.required' => 'Inputan Kriteria harus dipilih.',
+            'id_kriteria.required' => 'Inputan Kriteria harus dipilih',
         ];
     }
 }

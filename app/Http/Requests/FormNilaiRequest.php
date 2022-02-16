@@ -34,7 +34,7 @@ class FormNilaiRequest extends FormRequest
         $messages = [];
         $kriteria = Kriteria::all();
         foreach ($this->get('nilai') as $key => $value) {
-            $messages['nilai.'.$key.'.required'] = 'Inputan '.$kriteria[$key-1]->nama.' harus dipilih.';
+            $messages['nilai.'.$key.'.required'] = 'Inputan '.$kriteria[$key-1]->nama.' harus dipilih';
         }
 
         return $messages;

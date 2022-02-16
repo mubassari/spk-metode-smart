@@ -1,5 +1,5 @@
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('beranda') }}">
         <div class="sidebar-brand-icon">
             <img src="{{ asset('assets/img/logo/logo2.png') }}">
         </div>
@@ -52,8 +52,13 @@
             <div class="sidebar-heading">
                 fitur
             </div>
+<<<<<<< HEAD
             <li class="nav-item {{ Route::currentRouteName('perhitungan.kalkulasi') === 'perhitungan.kalkulasi' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('perhitungan.kalkulasi') }}">
+=======
+            <li class="nav-item {{ Route::currentRouteName('perhitungan.tampil') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('perhitungan.tampil') }}">
+>>>>>>> 0061359913d862a20c87470f97acb7943269cbd4
                     <i class="fas fa-puzzle-piece"></i>
                     <span>Perhitungan</span>
                 </a>
@@ -63,7 +68,7 @@
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Keluar</span>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST"style="display: none;">
-                        @csrf
+                        {{ csrf_field() }}
                     </form>
                 </a>
             </li>
@@ -73,8 +78,12 @@
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Masuk</span>
                 </a>
+<<<<<<< HEAD
             </li>
             <li class="nav-item">
+=======
+            </li><li class="nav-item">
+>>>>>>> 0061359913d862a20c87470f97acb7943269cbd4
                 <a class="nav-link" href="{{ route('register') }}">
                     <i class="fas fa-quidditch"></i>
                     <span>Daftar</span>

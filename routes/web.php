@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+<<<<<<< HEAD
 Route::get('/', function () {
     return view('beranda');
 })->name('beranda');
@@ -37,11 +39,20 @@ Route::get('register', function () {
 })->name('register');
 Route::post('register', [RegisterController::class, 'prosesRegister'])->name('register');
 
+=======
+Route::get('/', function () { return view('beranda'); })->name('beranda');
+Route::get('login', function () { return view('auth.login'); })->name('login');
+Route::post('login', [UserController::class, 'login'])->name('login');
+Route::post('logout', [UserController::class, 'logout'])->name('logout');
+Route::get('register', function () { return view('auth.register'); })->name('register');
+Route::post('register', [UserController::class, 'register'])->name('register');
+>>>>>>> 0061359913d862a20c87470f97acb7943269cbd4
 Route::middleware(['auth'])->group(function () {
     Route::resource('kriteria', KriteriaController::class)->except(['show']);
     Route::resource('parameter', ParameterController::class)->except(['show']);
     Route::resource('alternatif', AlternatifController::class)->except(['show']);
     Route::resource('alternatif', AlternatifController::class)->except(['show']);
     Route::resource('nilai', NilaiController::class)->only(['index', 'edit', 'update']);
-    Route::get('perhitungan', [PerhitunganController::class, 'kalkulasi'])->name('perhitungan.kalkulasi');
+    Route::get('perhitungan', [PerhitunganController::class, 'tampil'])->name('perhitungan.tampil');
+    Route::get('perhitungan/cetak', [PerhitunganController::class, 'cetak'])->name('perhitungan.cetak');
 });
