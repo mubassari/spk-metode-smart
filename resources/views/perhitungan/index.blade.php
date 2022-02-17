@@ -88,10 +88,12 @@
                     <th data-orderable="false">{{ $kriteria->nama }}</th>
                     @endforeach
                     <th>Total</th>
+                    <th>Peringkat</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($result->groupBy('nama_alternatif') as $keys => $value)
+                <?php $highest[0][] = $keys; ?>
                 <tr>
                     <th>{{ $keys }}</th>
                     @foreach ($value as $key => $item)
@@ -102,7 +104,8 @@
                         // $total_ = collect($total_);
                     ?>
                     @endforeach
-                    <th class="">{{ $highest = array_sum($total_[$keys]) }}</th>
+                    <th>{{ $highest[1][] = array_sum($total_[$keys]) }}</th>
+                    <th id="ranks"></th>
                 </tr>
                 @endforeach
             </tbody>
@@ -110,23 +113,30 @@
     </div>
 </div>
 @endsection
-
 @push('script')
 <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
-    // const highest = Math.max(...{{ json_encode($highest) }});
+    const highest = {{ json_encode($highest[1]) }};
+    const columns = document.querySelectorAll('#ranks');
+    let sorted = highest.slice().sort(function(a,b){return b-a});
+    var ranks = highest.map(function(v){ return sorted.indexOf(v)+1 });
+    $.each(columns, function(key, val) {
+        val.textContent = ranks[key];
+    })
     $(document).ready(function () {
         $('#alternatif').DataTable({
             info: false,
             paging: false,
             searching: false,
         });
-        $('#hasil').DataTable({
+        let hasil = $('#hasil').DataTable({
             info: false,
             paging: false,
             searching: false,
-        }).columns(-1).order('desc').draw();
+        }).columns(-2).order('desc').draw();
+        var data = hasil.column(-1).data();
+        data.push('Fini');
     });
 </script>
 @endpush
