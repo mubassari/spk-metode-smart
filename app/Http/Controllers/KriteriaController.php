@@ -40,18 +40,7 @@ class KriteriaController extends Controller
         Kriteria::create($request->only(['nama', 'bobot']));
 
         return redirect()->route('kriteria.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil ditambahkan.");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kriteria  $kriteria
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Kriteria $kriteria)
-    {
-        //
-    }
+    } 
 
     /**
      * Show
@@ -62,8 +51,7 @@ class KriteriaController extends Controller
      */
     public function edit(Kriteria $kriterium)
     {
-        $kriteria = $kriterium;
-        return view('kriteria.edit', ['kriteria' => $kriteria]);
+        return view('kriteria.edit', ['kriteria' => $kriterium]);
     }
 
     /**

@@ -11,7 +11,7 @@
 @push('script')
 <script>
     $(document).ready(function(){
-        $('.toast').toast({autohide: true, delay: 2500});
+        $('.toast').toast({autohide: true, delay: 3000});
         $('.toast').toast('show');
     });
 </script>

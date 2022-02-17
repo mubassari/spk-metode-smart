@@ -37,19 +37,22 @@ class PerhitunganController extends Controller
     public function cetak()
     {
         $data = $this->data();
-        $content = view('perhitungan.cetak', ['result' => $data[0], 'kriteria_' => $data[1]]);
 
-        try {
-            $html2pdf = new Html2Pdf('P', 'A4', 'en');
-            $html2pdf->pdf->setDisplayMode('fullpage');
-            // $html2pdf->setDefaultFont('Serif');
-            $html2pdf->writeHTML($content);
-            $html2pdf->output('example01.pdf');
-        } catch (Html2PdfException $th) {
-            $formatter = new ExceptionFormatter($th);
-            echo $formatter->getHtmlMessage();
+        if (count($data[0]) == 0 || count($data[1]) == 0) {
+            return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat mencetak data jika seluruh data masih kosong!");
+        } else {
+            try {
+                $content = view('perhitungan.cetak', ['result' => $data[0], 'kriteria_' => $data[1]]);
+                $html2pdf = new Html2Pdf('P', 'A4', 'en');
+                $html2pdf->pdf->setDisplayMode('fullpage');
+                $html2pdf->writeHTML($content);
+                $html2pdf->output();
+            } catch (Html2PdfException $th) {
+                $html2pdf->clean();
+                $formatter = new ExceptionFormatter($th);
+
+                return redirect()->route('perhitungan.index')->with('status', 'danger')->with('pesan', $formatter->getMessage());
+            }
         }
-        
-        // return $content;
     }
 }

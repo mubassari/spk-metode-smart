@@ -4,13 +4,13 @@
 @endpush
 @section('content')
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
-    @if (auth()->user()->level === 'admin')
-        <div class="mb-3 d-flex flex-row align-items-end justify-content-end">
-            <a href="{{ route('perhitungan.cetak') }}" class="btn btn-danger">
-                <i class="fas fa-file-pdf"></i> Cetak Data
-            </a>
-        </div>
-    @endif
+@if (auth()->user()->level === 'admin' && count($result) !== 0)
+<div class="mb-3 d-flex flex-row align-items-end justify-content-end">
+    <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }};" class="btn btn-danger">
+        <i class="fas fa-file-pdf"></i> Cetak Data
+    </button>
+</div>
+@endif
 <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Kriteria</h4>
@@ -19,7 +19,8 @@
         <table class="table align-items-center table-hover table-bordered">
             <thead class="thead-light">
                 <tr>
-                    @foreach ((sizeof($kriteria_) !== 0 ? $kriteria_ : collect([(object)['nama'=>'Kriteria']])) as $kriteria)
+                    @foreach ((sizeof($kriteria_) !== 0 ? $kriteria_ : collect([(object)['nama'=>'Kriteria']])) as
+                    $kriteria)
                     <th>{{ $kriteria->nama }}</th>
                     @endforeach
                 </tr>
@@ -30,11 +31,9 @@
                     <td>{{ $kriteria->bobot }}</td>
                     @endforeach
                 </tr>
-            </tbody>
                 <tr class="thead-light">
                     <th colspan="{{ count($kriteria_) }}">Nilai Ternomalisasi</th>
                 </tr>
-            <tbody>
                 <tr>
                     @foreach ($kriteria_ as $kriteria)
                     <?php $value = round(($kriteria->bobot / $kriteria_->pluck('bobot')->sum()), 2); ?>

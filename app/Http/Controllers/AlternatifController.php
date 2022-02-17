@@ -43,17 +43,6 @@ class AlternatifController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Alternatif  $alternatif
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Alternatif $alternatif)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Alternatif  $alternatif

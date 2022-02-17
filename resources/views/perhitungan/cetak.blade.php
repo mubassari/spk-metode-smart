@@ -46,14 +46,14 @@
     <table>
         <thead>
             <tr>
-                @foreach ($kriteria_ as $kriteria)
+                @foreach ((sizeof($kriteria_) !== 0 ? $kriteria_ : collect([(object)['nama'=>'Kriteria']])) as $kriteria)
                 <th>{{ $kriteria->nama }}</th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
             <tr>
-                @foreach ($kriteria_ as $kriteria)
+                @foreach ((sizeof($kriteria_) !== 0 ? $kriteria_ : collect([(object)['bobot'=>0]])) as $kriteria)
                 <td>{{ $kriteria->bobot }}</td>
                 @endforeach
             </tr>

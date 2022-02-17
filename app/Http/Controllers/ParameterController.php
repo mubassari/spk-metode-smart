@@ -28,7 +28,12 @@ class ParameterController extends Controller
      */
     public function create()
     {
-        return view('parameter.create', ['kriteria' => Kriteria::Select('id', 'nama')->get()]);
+        $kriteria = Kriteria::Select('id', 'nama')->get();
+        if (count($kriteria) == 0) {
+            return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat membuat data Parameter jika data Kriteria masih kosong!");
+        } else {
+            return view('parameter.create', ['kriteria' => $kriteria]);
+        }
     }
 
     /**
@@ -43,17 +48,6 @@ class ParameterController extends Controller
         Parameter::create($request->only(['id_kriteria', 'nama', 'bobot']));
 
         return redirect()->route('parameter.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil ditambahkan.");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Parameter  $parameter
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Parameter $parameter)
-    {
-        //
     }
 
     /**
