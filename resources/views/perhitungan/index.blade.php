@@ -5,8 +5,8 @@
 @section('content')
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
 @if (auth()->user()->level === 'admin' && count($result) !== 0)
-<div class="mb-3 d-flex flex-row align-items-end justify-content-end">
-    <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }};" class="btn btn-danger">
+<div class="mb-3 d-flex flex-row align-items-end justify-content-end d-print-none">
+    <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }}" class="btn btn-danger">
         <i class="fas fa-file-pdf"></i> Cetak Data
     </button>
 </div>
@@ -53,12 +53,12 @@
         <h4 class="m-0 font-weight-bold text-primary">Data Alternatif</h4>
     </div>
     <div class="table-responsive px-3 pb-3">
-        <table class="table align-items-center table-hover table-bordered">
+        <table class="table align-items-center table-hover table-bordered" id="alternatif" data-order="[]">
             <thead class="thead-light">
                 <tr>
                     <th>Alternatif</th>
                     @foreach ($kriteria_ as $kriteria)
-                    <th>{{ $kriteria->nama }}</th>
+                    <th data-orderable="false">{{ $kriteria->nama }}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -80,7 +80,7 @@
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Data Alternatif</h4>
     </div>
     <div class="table-responsive px-3 pb-3">
-        <table class="table align-items-center table-hover table-bordered" id="hasil">
+        <table class="table align-items-center table-hover table-bordered" id="hasil" data-order="[]">
             <thead class="thead-light">
                 <tr>
                     <th>Alternatif</th>
@@ -91,18 +91,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($result->groupBy('nama_alternatif') as $key => $value)
+                @foreach ($result->groupBy('nama_alternatif') as $keys => $value)
                 <tr>
-                    <th>{{ $key }}</th>
+                    <th>{{ $keys }}</th>
                     @foreach ($value as $key => $item)
                     <?php $total = $item->bobot_parameter * ($values ?? collect())->toArray()[$key]; ?>
                     <td>{{ $total }}</td>
                     <?php
-                        $total_[] = $total;
-                        $total_ = collect($total_);
+                        $total_[$keys][] = $total;
+                        // $total_ = collect($total_);
                     ?>
                     @endforeach
-                    <th class="">{{ $total_->sum() }}</th>
+                    <th class="">{{ $highest = array_sum($total_[$keys]) }}</th>
                 </tr>
                 @endforeach
             </tbody>
@@ -115,7 +115,13 @@
 <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
-    $(document).ready(function ()   {
+    // const highest = Math.max(...{{ json_encode($highest) }});
+    $(document).ready(function () {
+        $('#alternatif').DataTable({
+            info: false,
+            paging: false,
+            searching: false,
+        });
         $('#hasil').DataTable({
             info: false,
             paging: false,
