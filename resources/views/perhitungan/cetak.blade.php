@@ -46,7 +46,7 @@
     <table>
         <thead>
             <tr>
-                @foreach ((sizeof($kriteria_) !== 0 ? $kriteria_ : collect([(object)['nama'=>'Kriteria']])) as $kriteria)
+                @foreach ($kriteria_ as $kriteria)
                 <th>{{ $kriteria->nama }}</th>
                 @endforeach
             </tr>
