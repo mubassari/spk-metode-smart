@@ -30,8 +30,11 @@ class PerhitunganController extends Controller
     public function tampil()
     {
         $data = $this->data();
-
-        return view('perhitungan.index', ['result' => $data[0], 'kriteria_' => $data[1],]);
+        if (count($data[0]) == 0 || count($data[1]) == 0) {
+            return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat melihat data Perhitungan jika seluruh data masih kosong!");
+        } else {
+            return view('perhitungan.index', ['result' => $data[0], 'kriteria_' => $data[1],]);
+        }
     }
 
     public function cetak()
@@ -39,7 +42,7 @@ class PerhitunganController extends Controller
         $data = $this->data();
 
         if (count($data[0]) == 0 || count($data[1]) == 0) {
-            return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat mencetak data jika seluruh data masih kosong!");
+            return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat mencetak data Perhitungan jika seluruh data masih kosong!");
         } else {
             try {
                 $content = view('perhitungan.cetak', ['result' => $data[0], 'kriteria_' => $data[1]]);
