@@ -1,16 +1,23 @@
-@foreach ($kriteria_ as $key => $kriteria)
-<div class="form-group">
-    <input type="hidden" name="kriteria[{{$key }}]" value="{{ $kriteria->id }}">
-    <label for="nilai[{{ $kriteria->id }}]">Pilih Nilai {{ $kriteria->nama }}</label>
-    <select name="nilai[{{ $kriteria->id }}]" id="nilai[{{ $kriteria->id }}]"
-        class="form-control @if($errors->get('nilai.'.$kriteria->id)) is-invalid @endif">
-        <option value="">Pilih</option>
-        @foreach ($parameter_[$key] as $parameter)
-            <option value="{{ $parameter->id }}" {{ old('nilai.'.$kriteria->id, $nilai[$key]->id_parameter ?? '') == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama }}</option>
-        @endforeach
-    </select>
-    <x-errormessage error="nilai.{{ $kriteria->id }}" />
-</div>
+@foreach ($result->groupBy("nama_kriteria") as $key => $value)
+        <input type="hidden" value="{{ request("id_alternatif") }}" name="id_alternatif[]">
+        <div class="forum-group">
+                <?php
+                    $arr_kriteria = $value->unique("id_kriteria")->pluck("nama_kriteria", "id_kriteria");
+                ?>
+                <label for="kriteri">Pilih Kriteria <strong>{{ $arr_kriteria->values()[0] }}</strong></label>
+                <input type="hidden" value="{{ $arr_kriteria->keys()[0] }}" name="id_kriteria[]">
+        </div>
+        <div class="form-group">
+            <select name="id_parameter[]" id="" class="form-control">
+                <option value="">Pilih</option>
+                @foreach ($value as $parameter)
+                    <option {{ in_array($parameter->id, isset($id_parameter) ? $id_parameter->toArray() : []) ? 'selected' : '' }} value="{{ $parameter->id }}">{{ $parameter->nama_parameter }}</option>
+                @endforeach
+            </select>
+        </div>
 @endforeach
-<button type="reset" class="btn btn-primary">Reset</button>
-<button type="submit" class="btn btn-primary">{{ $tombol }}</button>
+
+<div class="mt-3">
+        <button type="reset" class="btn btn-primary">Reset</button>
+        <button type="submit" class="btn btn-primary">{{ $tombol }}</button>
+    </div>
