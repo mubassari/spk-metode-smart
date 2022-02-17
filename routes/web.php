@@ -38,7 +38,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('parameter', ParameterController::class)->except(['show']);
     Route::resource('alternatif', AlternatifController::class)->except(['show']);
     Route::resource('alternatif', AlternatifController::class)->except(['show']);
+
     Route::resource('nilai', NilaiController::class)->only(['index', 'edit', 'update']);
+    Route::resource('nilai', NilaiController::class)->except(['show', 'destroy', 'edit']);
+    Route::post('nilai/delete', [NilaiController::class, 'delete'])->name('nilai.delete');
+    Route::post('nilai/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
+
+
     Route::get('perhitungan', [PerhitunganController::class, 'tampil'])->name('perhitungan.tampil');
     Route::get('perhitungan/cetak', [PerhitunganController::class, 'cetak'])->name('perhitungan.cetak');
 });

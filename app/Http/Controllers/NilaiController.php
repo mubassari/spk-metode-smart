@@ -7,7 +7,7 @@ use App\Models\Kriteria;
 use App\Models\Parameter;
 use App\Models\Alternatif;
 use App\Http\Requests\FormNilaiRequest;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class NilaiController extends Controller
 {
@@ -18,19 +18,20 @@ class NilaiController extends Controller
      */
     public function index()
     {
-        $kriteria = Kriteria::all();
-        $alternatif = Alternatif::all();
-        $nilai_temp = Nilai::select("nilai.id_alternatif", "parameter.nama")->join("parameter", "parameter.id", "=", "nilai.id_parameter")->orderBy('id_alternatif')->orderBy('nilai.id_kriteria')->get();
-        $nilai = collect();
-        foreach ($alternatif as $value) {
-            $nilai->push($nilai_temp->filter(function ($item) use ($value) {
-                return $item->id_alternatif == $value->id;
-            })->all());
-        }
+        $result = Nilai::select(
+            "kriteria.nama as nama_kriteria",
+            "alternatif.id as id_alternatif",
+            "alternatif.nama as nama_alternatif",
+            "parameter.nama as nama_parameter",
+            "parameter.bobot as bobot_parameter"
+        )
+            ->join("kriteria", "kriteria.id", "=", "nilai.id_kriteria")
+            ->join("parameter", "parameter.id", "=", "nilai.id_parameter")
+            ->join("alternatif", "alternatif.id", "=", "nilai.id_alternatif")
+            ->get();
         return view('nilai.index', [
-            'kriteria_' => $kriteria,
-            'nilai_' => $nilai,
-            'alternatif_' => $alternatif
+            'result' => $result,
+            'alternatif_' => Alternatif::all()
         ]);
     }
 
@@ -41,7 +42,22 @@ class NilaiController extends Controller
      */
     public function create()
     {
-        //
+        if (request('id_alternatif') === null) {
+            return redirect(route("nilai.index"))->with(['status' => 'warning', 'pesan' => 'Alternatif harus dipilih.']);
+        }
+        $alternatif =  Nilai::where('id_alternatif', '=', request('id_alternatif'))->count();
+        if ($alternatif > 0) {
+            $alternatif = Alternatif::find(request('id_alternatif'));
+            return redirect(route("nilai.index"))->with(['status' => 'warning', 'pesan' => 'Alternatif sudah terdaftar.']);
+        }
+        $result = Parameter::select(
+            "parameter.id",
+            "parameter.nama as nama_parameter",
+            "parameter.id_kriteria",
+            "kriteria.nama as nama_kriteria",
+        )
+            ->join("kriteria", "kriteria.id", "=", "parameter.id_kriteria")->get();
+        return view('nilai.create', ['result' => $result, 'nama_alternatif' => Alternatif::find(request('id_alternatif'))->nama]);
     }
 
     /**
@@ -50,20 +66,20 @@ class NilaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FormNilaiRequest $request)
+    public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Nilai  $nilai
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Nilai $nilai)
-    {
-        //
+        for ($i = 0; $i < count($request->id_alternatif); $i++) {
+            if ($request->id_parameter[$i] === null) {
+                return redirect(route("nilai.create") . "?id_alternatif=" . $request->id_alternatif[$i])->with(['status' => 'warning', 'pesan' => 'Nilai pilihan kriteria tidak lengkap.']);
+            } else {
+                Nilai::create([
+                    'id_alternatif' => $request->id_alternatif[$i],
+                    'id_kriteria' => $request->id_kriteria[$i],
+                    'id_parameter' => $request->id_parameter[$i],
+                ]);
+            }
+        }
+        return redirect(route("nilai.index"))->with(['status' => 'success', 'pesan' => 'Data nilai alternatif berhasil ditambahkan']);
     }
 
     /**
@@ -72,25 +88,19 @@ class NilaiController extends Controller
      * @param  \App\Models\Nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function edit(Nilai $nilai)
+    public function edit(Request $request)
     {
-        $kriteria = Kriteria::Select('id', 'nama')->get();
-        $param_temp = Parameter::Select('id', 'id_kriteria', 'nama')->get();
-        $alternatif = Nilai::select('id_parameter')->where("id_alternatif", $nilai->id)->get();
-        $parameter = collect();
-
-        foreach ($kriteria as $value) {
-            $parameter->push((object)$param_temp->filter(function ($item) use ($value) {
-                return $item->id_kriteria == $value->id;
-            })->all());
-        }
-
-        return view('nilai.edit', [
-            'kriteria_' => $kriteria,
-            'parameter_' => $parameter,
-            'alternatif' => $nilai,
-            'nilai' => $alternatif
-        ]);
+        $id_alternatif = Alternatif::firstWhere("nama", $request->nama_alternatif)->id;
+        $nilai = Nilai::where("id_alternatif", $id_alternatif)->get();
+        $id_parameter = $nilai->pluck('id_parameter');
+        $result = Parameter::select(
+            "parameter.id",
+            "parameter.nama as nama_parameter",
+            "parameter.id_kriteria",
+            "kriteria.nama as nama_kriteria",
+        )
+            ->join("kriteria", "kriteria.id", "=", "parameter.id_kriteria")->get();
+        return view('nilai.edit', ['result' => $result, 'id_parameter' => $id_parameter, 'id_alternatif' => $id_alternatif, 'nama_alternatif' => Alternatif::firstWhere("nama", $request->nama_alternatif)->nama]);
     }
 
     /**
@@ -100,34 +110,24 @@ class NilaiController extends Controller
      * @param  \App\Models\Nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function update(Nilai $nilai, FormNilaiRequest $request)
+    public function update($id_alternatif, Request $request)
     {
-        $request->validated();
-
-        try {
-            DB::beginTransaction();
-            foreach ($request->kriteria as $key => $kriteria) {
-                $nilai->updateOrCreate(
-                    ['id_alternatif' => $request->alternatif, 'id_kriteria' => $kriteria],
-                    ['id_parameter' => $request->nilai[$key + 1]]
-                );
+        $nilai = Nilai::where('id_alternatif', $id_alternatif)->get();
+        foreach ($nilai as $key => $value) {
+            if ($request->id_parameter[$key] === null) {
+                return redirect(route("nilai.index"))->with(['status' => 'warning', 'pesan' => 'Gagal memperbarui nilai alternatif.']);
+            } else {
+                $value->update([
+                    'id_parameter' => $request->id_parameter[$key],
+                ]);
             }
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollback();
         }
-
-        return redirect()->route('nilai.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil diperbarui.");
+        return redirect(route("nilai.index"))->with(['status' => 'success', 'pesan' => 'Data nilai alternatif berhasil diperbarui.']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Nilai  $nilai
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Nilai $nilai)
+    public function delete(Request $request)
     {
-        //
+        Nilai::where("id_alternatif", Alternatif::firstWhere("nama", $request->nama_alternatif)->id)->delete();
+        return redirect(route('nilai.index'))->with(['status' => 'success', 'pesan' => 'Data nilai alternatif berhasil dihapus.']);
     }
 }
