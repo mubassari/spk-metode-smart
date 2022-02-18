@@ -23,6 +23,7 @@
             width: 100%;
             border-spacing: 0px;
             border-collapse: collapse;
+            margin: auto;
         }
 
         tr,
@@ -102,22 +103,19 @@
                 <th data-orderable="false">{{ $kriteria->nama }}</th>
                 @endforeach
                 <th>Total</th>
+                <th>Peringkat</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($result->groupBy('nama_alternatif') as $key => $value)
-            <tr>
-                <th>{{ $key }}</th>
-                @foreach ($value as $key => $item)
-                <?php $total = $item->bobot_parameter * ($values ?? collect())->toArray()[$key]; ?>
-                <td>{{ $total }}</td>
-                <?php
-                        $total_[] = $total;
-                        $total_ = collect($total_);
-                    ?>
-                @endforeach
-                <th>{{ $total_->sum() }}</th>
-            </tr>
+            @foreach ($nilai->sortByDesc('total') as $item)
+                <tr>
+                    <td>{{ $item['nama_alternatif'] }}</td>
+                    @foreach ($item['nilai_parameter'] as $value)
+                    <td>{{ $value }}</td>
+                    @endforeach
+                    <td>{{ $item['total'] }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>
