@@ -16,7 +16,7 @@ class ParameterSeeder extends Seeder
         $kriteria_ = \App\Models\Kriteria::all();
         $arr_values = [
             [['Ph air < 5', 25], ['Ph air 5 < 8', 50], ['Ph air > 8', 25]],
-            [['< 28-310C', 50], ['=> 28-310C', 35], ['> 310C', 15]],
+            [['< 28-31°C', 50], ['=> 28-31°C', 35], ['> 31°C', 15]],
             [['> 3 mg/l', 70], ['< 3 mg/l', 30]],
             [['< 0,1 mg/l', 70], ['> 0,1 mg/l', 30]],
             [['< 1 mg/l', 70], ['> 1 mg/l', 30]],

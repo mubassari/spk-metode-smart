@@ -21,30 +21,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('beranda');
-})->name('beranda');
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login')->middleware('guest');
+Route::get('/', function () { return view('beranda'); })->name('beranda');
+Route::get('login', function () { return view('auth.login'); })->name('login')->middleware('guest');
 Route::post('login', [UserController::class, 'login'])->name('login');
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
-Route::get('register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get('register', function () { return view('auth.register'); })->name('register');
 Route::post('register', [UserController::class, 'register'])->name('register');
 Route::middleware(['auth'])->group(function () {
     Route::resource('kriteria', KriteriaController::class)->except(['show']);
     Route::resource('parameter', ParameterController::class)->except(['show']);
     Route::resource('alternatif', AlternatifController::class)->except(['show']);
-    Route::resource('alternatif', AlternatifController::class)->except(['show']);
-
-    Route::resource('nilai', NilaiController::class)->only(['index', 'edit', 'update']);
-    Route::resource('nilai', NilaiController::class)->except(['show', 'destroy', 'edit']);
-    Route::post('nilai/delete', [NilaiController::class, 'delete'])->name('nilai.delete');
-    Route::post('nilai/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
-
-
+    Route::resource('nilai', NilaiController::class)->except(['show']);
     Route::get('perhitungan', [PerhitunganController::class, 'tampil'])->name('perhitungan.tampil');
     Route::get('perhitungan/cetak', [PerhitunganController::class, 'cetak'])->name('perhitungan.cetak');
 });

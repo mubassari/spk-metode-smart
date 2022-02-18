@@ -21,7 +21,7 @@
                                 <div class="form-group">
                                     <input type="text" name="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="Masukkan Email" value="{{ old('nama', '') }}">
+                                        placeholder="Masukkan Email" value="{{ old('email', '') }}">
                                     <x-errormessage error="email" />
                                 </div>
                                 <div class="form-group">
@@ -39,15 +39,15 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="password" name="konfirmasi_password"
-                                            class="form-control password @error('password') is-invalid @enderror"
+                                        <input type="password" name="password_confirmation"
+                                            class="form-control password @error('password_confirmation') is-invalid @enderror"
                                             placeholder="Konfirmasi Password">
                                         <div class="input-group-append toggle-password">
                                             <span class="input-group-text">
                                                 <i class="fas fa-eye-slash toggle-password-icon"></i>
                                             </span>
                                         </div>
-                                        <x-errormessage error="konfirmasi_password" />
+                                        <x-errormessage error="password_confirmation" />
                                     </div>
                                 </div>
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Daftar</button>

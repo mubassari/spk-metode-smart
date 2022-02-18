@@ -26,9 +26,9 @@ class UserController extends Controller
     {
         $newUser = $request->validate([
             'nama' => 'required',
-            'email' => 'email|required|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:4|confirmed',
-            'konfirmasi_password' => 'required|same:password',
+            'password_confirmation' => 'required|same:password',
         ]);
 
         $newUser['password'] = \Illuminate\Support\Facades\Hash::make($newUser['password']);
