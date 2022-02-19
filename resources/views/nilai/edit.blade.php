@@ -6,6 +6,7 @@
         <form action="{{ route('nilai.update', [$id_alternatif]) }}" method="post">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
+            <input type="hidden" value="{{ request('id_alternatif') }}" name="id_alternatif">
             @include('nilai.form', ['tombol' => 'Ubah'])
         </form>
       </div>

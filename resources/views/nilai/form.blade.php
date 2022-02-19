@@ -1,20 +1,16 @@
 @foreach ($result->groupBy("nama_kriteria") as $key => $value)
-<input type="hidden" value="{{ request('id_alternatif') }}" name="id_alternatif[]">
-<div class="forum-group">
-    <?php
-        $arr_kriteria = $value->unique("id_kriteria")->pluck("nama_kriteria", "id_kriteria");
-    ?>
-    <label for="kriteri">Pilih Kriteria <strong>{{ $arr_kriteria->values()[0] }}</strong></label>
-    <input type="hidden" value="{{ $arr_kriteria->keys()[0] }}" name="id_kriteria[]">
-</div>
 <div class="form-group">
-    <select name="id_parameter[]" id="" class="form-control">
+    <input type="hidden" value="{{ $value[0]->id_kriteria }}" name="id_kriteria[]">
+    <label for="parameter">Pilih Kriteria <strong>{{ $key }}</strong></label>
+    <select name="id_parameter[{{ $value[0]->id_kriteria }}]" id="parameter"
+        class="form-control @error('id_parameter.'.$value[0]->id_kriteria) is-invalid @enderror">
         <option value="">Pilih</option>
         @foreach ($value as $parameter)
-        <option {{ in_array($parameter->id, isset($id_parameter) ? $id_parameter->toArray() : []) ? 'selected' : '' }}
-            value="{{ $parameter->id }}">{{ $parameter->nama_parameter }}</option>
+        <option value="{{ $parameter->id }}"
+            {{ (old('id_parameter.'.$value[0]->id_kriteria) ?? in_array($parameter->id, isset($id_parameter) ? $id_parameter->toArray() : [])) == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama_parameter }}</option>
         @endforeach
     </select>
+    <x-errormessage error="id_parameter.{{ $value[0]->id_kriteria }}" />
 </div>
 @endforeach
 <div class="mt-3">

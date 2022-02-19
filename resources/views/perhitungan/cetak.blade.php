@@ -16,7 +16,7 @@
             font-weight: bold;
             text-align: center;
             text-decoration: underline solid black auto;
-            margin-bottom: 25px;
+            margin: 25px;
         }
 
         table {
@@ -31,13 +31,13 @@
             border: thin solid black;
             vertical-align: middle;
             text-align: center;
-            padding: 2px;
+            padding: 10px;
         }
 
         tr,
         td {
             border: thin solid black;
-            padding: 2px;
+            padding: 5px;
         }
     </style>
 </head>
@@ -79,14 +79,16 @@
             <tr>
                 <th>Alternatif</th>
                 @foreach ($kriteria_ as $kriteria)
-                <th>{{ $kriteria->nama }}</th>
+                <th>
+                    <?= str_replace(' ', '<br>', $kriteria->nama) ?>
+                </th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
             @foreach ($result->groupBy('nama_alternatif') as $key => $value)
             <tr>
-                <th>{{ $key }}</th>
+                <td style="font-weight: bold">{{ $key }}</td>
                 @foreach ($value as $item)
                 <td>{{ $item->bobot_parameter }}</td>
                 @endforeach
@@ -98,24 +100,26 @@
     <table>
         <thead>
             <tr>
-                <th>Alternatif</th>
+                <td style="font-weight: bold">Alternatif</td>
                 @foreach ($kriteria_ as $kriteria)
-                <th data-orderable="false">{{ $kriteria->nama }}</th>
+                <th>
+                    <?= str_replace(' ', '<br>', $kriteria->nama) ?>
+                </th>
                 @endforeach
                 <th>Total</th>
                 <th>Peringkat</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($nilai->sortByDesc('total') as $item)
-                <tr>
-                    <td>{{ $item['nama_alternatif'] }}</td>
-                    @foreach ($item['nilai_parameter'] as $value)
-                    <td>{{ $value }}</td>
-                    @endforeach
-                    <td>{{ $item['total'] }}</td>
-                    <td>{{ $loop->iteration }}</td>
-                </tr>
+            @foreach ($nilai->sortByDesc('total') as $key => $item)
+            <tr @once style="font-weight: bold" @endonce>
+                <td>{{ $item['nama_alternatif'] }}</td>
+                @foreach ($item['nilai_parameter'] as $value)
+                <td>{{ $value }}</td>
+                @endforeach
+                <td>{{ $item['total'] }}</td>
+                <td>{{ $loop->iteration }}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>

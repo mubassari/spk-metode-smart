@@ -101,7 +101,6 @@
                     <td>{{ $total }}</td>
                     <?php
                         $total_[$keys][] = $total;
-                        // $total_ = collect($total_);
                     ?>
                     @endforeach
                     <th>{{ $highest[1][] = array_sum($total_[$keys]) }}</th>
@@ -135,8 +134,6 @@
             paging: false,
             searching: false,
         }).columns(-2).order('desc').draw();
-        var data = hasil.column(-1).data();
-        data.push('Fini');
     });
 </script>
 @endpush

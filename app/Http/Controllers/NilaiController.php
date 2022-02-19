@@ -6,7 +6,7 @@ use App\Models\Nilai;
 use App\Models\Parameter;
 use App\Models\Alternatif;
 use Illuminate\Support\Facades\DB;
-// use App\Http\Requests\Request;
+use App\Http\Requests\FormNilaiRequest;
 use Illuminate\Http\Request;
 
 class NilaiController extends Controller
@@ -65,22 +65,23 @@ class NilaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormNilaiRequest $request)
     {
+        $request->validated();
         try {
             DB::beginTransaction();
-            for ($i = 0; $i < count($request->id_alternatif); $i++) {
+            foreach ($request->id_kriteria as $key => $value) {
                 Nilai::create([
-                    'id_kriteria' => $request->id_kriteria[$i],
-                    'id_parameter' => $request->id_parameter[$i],
-                    'id_alternatif' => $request->id_alternatif[$i],
+                    'id_kriteria' => $value,
+                    'id_alternatif' => $request->id_alternatif,
+                    'id_parameter' => $request->id_parameter[$key + 1],
                 ]);
             }
             DB::commit();
             return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect(route("nilai.create") . "?id_alternatif=" . $request->id_alternatif[$i])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
+            return redirect()->route('nilai.create', ['id_alternatif' => $request->id_alternatif])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
         }
     }
 
@@ -111,14 +112,15 @@ class NilaiController extends Controller
      * @param  \App\Models\Nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function update($id_alternatif, Request $request)
+    public function update($id_alternatif, FormNilaiRequest $request)
     {
+        $request->validated();
         try {
             DB::beginTransaction();
             $nilai = Nilai::where('id_alternatif', $id_alternatif)->get();
             foreach ($nilai as $key => $value) {
                 $value->update([
-                    'id_parameter' => $request->id_parameter[$key],
+                    'id_parameter' => $request->id_parameter[$key + 1],
                 ]);
             }
             DB::commit();
