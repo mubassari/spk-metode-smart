@@ -37,6 +37,7 @@
         tr,
         td {
             border: thin solid black;
+            padding: 10px;
             padding: 5px;
         }
     </style>
@@ -54,7 +55,7 @@
         </thead>
         <tbody>
             <tr>
-                @foreach ((sizeof($kriteria_) !== 0 ? $kriteria_ : collect([(object)['bobot'=>0]])) as $kriteria)
+                @foreach ($kriteria_ as $kriteria)
                 <td>{{ $kriteria->bobot }}</td>
                 @endforeach
             </tr>
@@ -62,16 +63,18 @@
                 <th colspan="{{ count($kriteria_) }}">Nilai Ternomalisasi</th>
             </tr>
             <tr>
-                @foreach ($kriteria_ as $kriteria)
-                <?php $value = round(($kriteria->bobot / $kriteria_->pluck('bobot')->sum()), 2); ?>
-                <td>{{ $value }}</td>
-                <?php
-                    $values[] = $value;
-                        $values = collect($values);
-                    ?>
+                @foreach($kriteria_ as $kriteria)
+                <td>{{ round($kriteria->normalisasi, 3) }}</td>
                 @endforeach
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="{{ count($kriteria_) }}">
+                    Jumlah : {{ $kriteria_->pluck('normalisasi')->sum() }}
+                </th>
+            </tr>
+        </tfoot>
     </table>
     <h4 class="header">Data Alternatif</h4>
     <table>
@@ -79,18 +82,16 @@
             <tr>
                 <th>Alternatif</th>
                 @foreach ($kriteria_ as $kriteria)
-                <th>
-                    <?= str_replace(' ', '<br>', $kriteria->nama) ?>
-                </th>
+                <th><?= str_replace(' ', '<br>', $kriteria->nama) ?></th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
-            @foreach ($result->groupBy('nama_alternatif') as $key => $value)
+            @foreach ($nilai as $value)
             <tr>
-                <td style="font-weight: bold">{{ $key }}</td>
-                @foreach ($value as $item)
-                <td>{{ $item->bobot_parameter }}</td>
+                <th>{{ $value['nama_alternatif'] }}</th>
+                @foreach ($value['bobot_parameter'] as $item)
+                <td>{{ $item }}</td>
                 @endforeach
             </tr>
             @endforeach
@@ -100,24 +101,22 @@
     <table>
         <thead>
             <tr>
-                <td style="font-weight: bold">Alternatif</td>
+                <th>Alternatif</th>
                 @foreach ($kriteria_ as $kriteria)
-                <th>
-                    <?= str_replace(' ', '<br>', $kriteria->nama) ?>
-                </th>
+                <th><?= str_replace(' ', '<br>', $kriteria->nama) ?></th>
                 @endforeach
                 <th>Total</th>
                 <th>Peringkat</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($nilai->sortByDesc('total') as $key => $item)
+            @foreach ($nilai->sortByDesc('total', SORT_NATURAL) as $value)
             <tr @once style="font-weight: bold" @endonce>
-                <td>{{ $item['nama_alternatif'] }}</td>
-                @foreach ($item['nilai_parameter'] as $value)
-                <td>{{ $value }}</td>
+                <th>{{ $value['nama_alternatif'] }}</th>
+                @foreach ($value['nilai_parameter'] as $item)
+                <td>{{ round($item, 2) }}</td>
                 @endforeach
-                <td>{{ $item['total'] }}</td>
+                <td>{{ round($value['total'], 3) }}</td>
                 <td>{{ $loop->iteration }}</td>
             </tr>
             @endforeach

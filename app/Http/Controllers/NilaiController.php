@@ -29,6 +29,9 @@ class NilaiController extends Controller
             ->join("parameter", "parameter.id", "=", "nilai.id_parameter")
             ->join("alternatif", "alternatif.id", "=", "nilai.id_alternatif")
             ->get();
+        if (count(Alternatif::all()) == 0 || count(Parameter::all()) == 0) {
+            return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat mengisi data Nilai jika terdapat data yang masih kosong!");
+        }
         return view('nilai.index', [
             'result' => $result,
             'alternatif_' => Alternatif::all()

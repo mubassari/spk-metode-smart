@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="input-nama">Nama Kriteria</label>
-    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="input-nama" name="nama" placeholder="Masukkan Nama Kriteria" value="{{ old('nama', ($kriteria->nama ?? '')) }}">
+    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="input-nama" name="nama" placeholder="Masukkan Nama Kriteria" value="{{ old('nama', ($kriteria->nama ?? '')) }}" autofocus>
     <x-errormessage error="nama" />
 </div>
 <div class="form-group">

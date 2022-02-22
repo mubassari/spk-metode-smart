@@ -14,6 +14,10 @@
     <link href="{{ asset('assets/css/ruang-admin.min.css') }}" rel="stylesheet">
     @stack('style')
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         td,
         th {
             text-align: center;

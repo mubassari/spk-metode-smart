@@ -4,16 +4,18 @@
 @endpush
 @section('content')
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
+@if (auth()->user()->level === 'admin')
 <div class="mb-3 d-flex flex-row align-items-end justify-content-end d-print-none">
     <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }}" class="btn btn-danger">
         <i class="fas fa-file-pdf"></i> Cetak Data
     </button>
 </div>
+@endif
 <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Kriteria</h4>
     </div>
-    <div class="table-responsive px-3">
+    <div class="table-responsive px-3 pb-3">
         <table class="table align-items-center table-hover table-bordered">
             <thead class="thead-light">
                 <tr>
@@ -32,17 +34,12 @@
                     <th colspan="{{ count($kriteria_) }}">Nilai Ternomalisasi</th>
                 </tr>
                 <tr>
-                    @foreach ($kriteria_ as $kriteria)
-                    <?php $value = round(($kriteria->bobot / $kriteria_->pluck('bobot')->sum()), 2); ?>
-                    <td>{{ $value }}</td>
-                    <?php
-                    $values[] = $value;
-                        $values = collect($values);
-                    ?>
+                    @foreach($kriteria_ as $kriteria)
+                    <td>{{ round($kriteria->normalisasi, 3) }}</td>
                     @endforeach
                 </tr>
             </tbody>
-            <caption>Jumlah : {{ round(($values ?? collect())->sum()) }}</caption>
+            <caption>Jumlah : {{ $kriteria_->pluck('normalisasi')->sum() }}</caption>
         </table>
     </div>
 </div>
@@ -61,11 +58,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($result->groupBy('nama_alternatif') as $key => $value)
+                @foreach ($nilai as $value)
                 <tr>
-                    <th>{{ $key }}</th>
-                    @foreach ($value as $item)
-                    <td>{{ $item->bobot_parameter }}</td>
+                    <th>{{ $value['nama_alternatif'] }}</th>
+                    @foreach ($value['bobot_parameter'] as $item)
+                    <td>{{ $item }}</td>
                     @endforeach
                 </tr>
                 @endforeach
@@ -75,7 +72,7 @@
 </div>
 <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h4 class="m-0 font-weight-bold text-primary">Normalisasi Data Alternatif</h4>
+        <h4 class="m-0 font-weight-bold text-primary">Perankingan Alternatif</h4>
     </div>
     <div class="table-responsive px-3 pb-3">
         <table class="table align-items-center table-hover table-bordered" id="hasil" data-order="[]">
@@ -90,19 +87,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($result->groupBy('nama_alternatif') as $keys => $value)
-                <?php $highest[0][] = $keys; ?>
-                <tr>
-                    <th>{{ $keys }}</th>
-                    @foreach ($value as $key => $item)
-                    <?php $total = $item->bobot_parameter * ($values ?? collect())->toArray()[$key]; ?>
-                    <td>{{ $total }}</td>
-                    <?php
-                        $total_[$keys][] = $total;
-                    ?>
+                @foreach ($nilai->sortByDesc('total', SORT_NATURAL) as $value)
+                <tr @once class="bg-primary text-white" @endonce>
+                    <th>{{ $value['nama_alternatif'] }}</th>
+                    @foreach ($value['nilai_parameter'] as $item)
+                    <td>{{ round($item, 2) }}</td>
                     @endforeach
-                    <th>{{ $highest[1][] = array_sum($total_[$keys]) }}</th>
-                    <th id="ranks"></th>
+                    <td>{{ round($value['total'], 3) }}</td>
+                    <td>{{ $loop->iteration }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -114,24 +106,17 @@
 <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
-    const highest = {{ json_encode($highest[1]) }};
-    const columns = document.querySelectorAll('#ranks');
-    let sorted = highest.slice().sort(function(a,b){return b-a});
-    var ranks = highest.map(function(v){ return sorted.indexOf(v)+1 });
-    $.each(columns, function(key, val) {
-        val.textContent = ranks[key];
-    })
     $(document).ready(function () {
         $('#alternatif').DataTable({
             info: false,
             paging: false,
             searching: false,
         });
-        let hasil = $('#hasil').DataTable({
+        $('#hasil').DataTable({
             info: false,
             paging: false,
             searching: false,
-        }).columns(-2).order('desc').draw();
+        }).columns(-1).order('asc').draw();
     });
 </script>
 @endpush

@@ -1,5 +1,13 @@
 @extends('layouts.main')
 @section('content')
+@push('style')
+<style>
+    tr,
+    td {
+        white-space: pre;
+    }
+</style>
+@endpush
 <x-breadcrumb title="Tampil Data Nilai" link="{{ route('nilai.index') }}" item="Nilai" subItem="Tampil Data" />
 <div class="row">
     <div class="col-lg-6">
@@ -24,11 +32,13 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h4 class="mb-2 font-weight-bold text-primary">Alternatif yang sudah terdaftar</h4>
-                <ul class="list-group">
+                <div class="list-group">
                     @foreach ($result->groupBy('nama_alternatif')->keys() as $value)
-                    <li class="list-group-item">{{ $value }}</li>
+                    <a href="#{{ str_replace(' ', '-', $value) }}" class="list-group-item list-group-item-action">
+                        {{ $value }}
+                    </a>
                     @endforeach
-                </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -36,14 +46,14 @@
 <div class="col-lg-12 mb-4">
     <!-- Simple Tables -->
     @foreach ($result->groupBy('nama_alternatif') as $key => $value)
-    <div class="card mb-4">
+    <div class="card mb-4" id="{{ str_replace(' ', '-', $key) }}">
         <div class="card-header py-3 d-flex justify-content-between">
             <h4 class="mb-2 font-weight-bold text-primary">Nama Alternatif : {{ $key }}</h4>
             <div class="d-flex">
                 <form method="GET" action="{{ route('nilai.edit', $value[0]->id_alternatif) }}">
                     <button type="submit" class="btn btn-sm btn-info mr-2">Ubah</button>
                 </form>
-                <form method="POST" action="{{ route('nilai.destroy', $value[0]->id_alternatif) }}">                    {{ csrf_field() }}
+                <form method="POST" action="{{ route('nilai.destroy', $value[0]->id_alternatif) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button type="submit" class="btn btn-sm btn-danger"
