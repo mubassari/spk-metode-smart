@@ -44,8 +44,7 @@ class ParameterController extends Controller
      */
     public function store(FormParameterRequest $request)
     {
-        $request->validated();
-        Parameter::create($request->only(['id_kriteria', 'nama', 'bobot']));
+        Parameter::create($request->validated());
 
         return redirect()->route('parameter.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil ditambahkan.");
     }
@@ -73,8 +72,7 @@ class ParameterController extends Controller
      */
     public function update(Parameter $parameter, FormParameterRequest $request)
     {
-        $request->validated();
-        $parameter->update($request->only(['id_kriteria', 'nama', 'bobot']));
+        $parameter->update($request->validated());
 
         return redirect()->route('parameter.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil diperbarui.");
     }

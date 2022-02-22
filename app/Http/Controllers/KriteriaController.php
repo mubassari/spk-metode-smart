@@ -36,11 +36,10 @@ class KriteriaController extends Controller
      */
     public function store(FormKriteriaRequest $request)
     {
-        $request->validated();
-        Kriteria::create($request->only(['nama', 'bobot']));
+        Kriteria::create($request->validated());
 
         return redirect()->route('kriteria.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil ditambahkan.");
-    } 
+    }
 
     /**
      * Show
@@ -63,8 +62,7 @@ class KriteriaController extends Controller
      */
     public function update(Kriteria $kriterium, FormKriteriaRequest $request)
     {
-        $request->validated();
-        $kriterium->update($request->only(['nama', 'bobot']));
+        $kriterium->update($request->validated());
 
         return redirect()->route('kriteria.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil diperbarui.");
     }

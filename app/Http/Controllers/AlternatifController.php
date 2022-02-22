@@ -36,8 +36,7 @@ class AlternatifController extends Controller
      */
     public function store(FormAlternatifRequest $request)
     {
-        $request->validated();
-        Alternatif::create($request->only(['nama']));
+        Alternatif::create($request->validated());
 
         return redirect()->route('alternatif.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil ditambahkan.");
     }
@@ -62,8 +61,7 @@ class AlternatifController extends Controller
      */
     public function update(Alternatif $alternatif, FormAlternatifRequest $request)
     {
-        $request->validated();
-        $alternatif->update($request->only(['nama']));
+        $alternatif->update($request->validated());
 
         return redirect()->route('alternatif.index')->with('status', 'success')->with('pesan', "Data $request->nama berhasil diperbarui.");
     }

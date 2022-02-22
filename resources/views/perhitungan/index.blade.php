@@ -4,13 +4,11 @@
 @endpush
 @section('content')
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
-@if (auth()->user()->level === 'admin' && count($result) !== 0)
 <div class="mb-3 d-flex flex-row align-items-end justify-content-end d-print-none">
     <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }}" class="btn btn-danger">
         <i class="fas fa-file-pdf"></i> Cetak Data
     </button>
 </div>
-@endif
 <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h4 class="m-0 font-weight-bold text-primary">Normalisasi Kriteria</h4>
