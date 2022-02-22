@@ -32,7 +32,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h4 class="mb-2 font-weight-bold text-primary">Alternatif yang sudah terdaftar</h4>
-                <div class="list-group">
+                <div class="list-group" style="max-height: 250px;overflow-y: auto;">
                     @foreach ($result->groupBy('nama_alternatif')->keys() as $value)
                     <a href="#{{ str_replace(' ', '-', $value) }}" class="list-group-item list-group-item-action">
                         {{ $value }}

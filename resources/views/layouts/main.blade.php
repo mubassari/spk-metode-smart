@@ -25,7 +25,7 @@
     </style>
 </head>
 
-<body id="page-top">
+<body>
     <div id="wrapper">
         <!-- Sidebar -->
         @include('layouts.sidebar')
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Scroll to top -->
-    <a class="scroll-to-top rounded" href="#page-top">
+    <a class="scroll-to-top text-white rounded" onclick="window.scrollTo(0, 0)">
         <i class="fas fa-angle-up"></i>
     </a>
 
