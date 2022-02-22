@@ -18,7 +18,8 @@
                     <div class="form-group">
                         <select name="id_alternatif" class="form-control" id="namaAlternatif">
                             <option value="">Pilih</option>
-                            @foreach ($alternatif_ as $alternatif)
+                            @foreach ($alternatif_->whereNotIn('nama', $result->groupBy('nama_alternatif')->keys()) as
+                            $alternatif)
                             <option value="{{ $alternatif->id }}">{{ $alternatif->nama }}</option>
                             @endforeach
                         </select>
@@ -29,10 +30,10 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="card mb-4">
+        <div class="card mb-4" id="daftar-alternatif">
             <div class="card-body">
                 <h4 class="mb-2 font-weight-bold text-primary">Alternatif yang sudah terdaftar</h4>
-                <div class="list-group" style="max-height: 250px;overflow-y: auto;">
+                <div class="list-group" style="max-height: 250px; overflow-y: auto;">
                     @foreach ($result->groupBy('nama_alternatif')->keys() as $value)
                     <a href="#{{ str_replace(' ', '-', $value) }}" class="list-group-item list-group-item-action">
                         {{ $value }}
@@ -47,12 +48,15 @@
     <!-- Simple Tables -->
     @foreach ($result->groupBy('nama_alternatif') as $key => $value)
     <div class="card mb-4" id="{{ str_replace(' ', '-', $key) }}">
-        <div class="card-header py-3 d-flex justify-content-between">
-            <h4 class="mb-2 font-weight-bold text-primary">Nama Alternatif : {{ $key }}</h4>
-            <div class="d-flex">
-                <form method="GET" action="{{ route('nilai.edit', $value[0]->id_alternatif) }}">
-                    <button type="submit" class="btn btn-sm btn-info mr-2">Ubah</button>
-                </form>
+        <div class="card-header py-3 row">
+            <h4 class="col-md-6 mb-2 font-weight-bold text-primary">Nama Alternatif : {{ $key }}</h4>
+            <div class="col-md-6 d-flex justify-content-end">
+                <a href="#daftar-alternatif">
+                    <button class="btn btn-sm btn-primary mr-2">Ke Daftar</button>
+                </a>
+                <a href="{{ route('nilai.edit', $value[0]->id_alternatif) }}">
+                    <button class="btn btn-sm btn-info mr-2">Ubah</button>
+                </a>
                 <form method="POST" action="{{ route('nilai.destroy', $value[0]->id_alternatif) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
