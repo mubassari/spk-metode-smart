@@ -14,7 +14,6 @@ class PerhitunganController extends Controller
     {
         $result = Nilai::select(
             "kriteria.id as id_kriteria",
-            "alternatif.id as id_alternatif",
             "kriteria.nama as nama_kriteria",
             "alternatif.nama as nama_alternatif",
             "parameter.bobot as bobot_parameter",

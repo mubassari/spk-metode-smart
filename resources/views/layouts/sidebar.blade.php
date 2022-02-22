@@ -1,7 +1,7 @@
 <ul class="navbar-nav sidebar sidebar-light accordion d-print-none" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('beranda') }}">
         <div class="sidebar-brand-icon">
-            <img src="{{ asset('assets/img/logo/logo2.png') }}">
+            <img src="{{ asset('assets/img/logo/logo.png') }}">
         </div>
         <div class="sidebar-brand-text mx-3">E-SPK-SMART</div>
     </a>

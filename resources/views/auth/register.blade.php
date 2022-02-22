@@ -8,9 +8,9 @@
                     <div class="col-lg-12">
                         <div class="login-form">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Register</h1>
+                                <img src="{{ asset('assets/img/logo/logo.png') }}" style="max-width: 200px">
                             </div>
-                            <form class="user mb-5" action="{{ route('register') }}" method="POST">
+                            <form class="user my-5" action="{{ route('register') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <input type="text" name="nama"
